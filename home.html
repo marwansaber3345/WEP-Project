@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>La Cascada Restaurant</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+
+
+
+
+<header>
+    <div class="logo">La Cascada Restaurant</div>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">Reservation</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+
+
+
+
+<main>
+<div class="home-background">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="misc/background-cooking.mp4" type="video/mp4">
+    </video>
+    <div class="hero-text">
+        <h1>مطعم زي الزفت</h1>
+        <p>A Taste of مش عارف</p>
+    </div>
+</div>
+
+    <section class="content-area">
+        <h1>جرب ميضرش</h1>
+        <p>مش اول مرة تاخد قرار غلط يعني</p>
+    </section>
+</main>
+
+
+
+
+
+<script>
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) { 
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
+        }
+    });
+</script>
+
+
+
+</body>
+</html>
