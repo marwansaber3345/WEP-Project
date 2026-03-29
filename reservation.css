@@ -1,17 +1,21 @@
+:root{
+    --backcolor: rgb(80, 0, 0);
+    --maincolor: gold;
+    --subcolor: rgb(156, 19, 19);
+}
 body{
-    background-color: #2f1200;
- 
-  font-optical-sizing: auto;
-  font-weight:weight;
-  font-style: normal;
+    background-color: var(--backcolor);
+    color: var(--maincolor);
 }
 *{
-    -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
+
+
 .upper{
- margin-top: -13px;
+ margin-top: 0;
  opacity: 0.34567;
 }
 h1{
@@ -55,18 +59,14 @@ opacity: 0.7899999;
 }
 
 .parent{
-height: 1000px;
-width: auto;
-/* display: flex; */
-
-
+    height: 1000px;
+    width: auto;
 }
 
 .info-client{
     width: 60%;
      height: auto;
-    display: block;
-    
+    display: block;    
 }
 input[type="text"],[type="email"],[type="tel"],[type="date"],[type="time"],textarea{
     background-color: #5a2300;
@@ -104,8 +104,8 @@ input[type="tel"]{
     transition: 0.6s;
      
 }
-.about-us,.map{
-position: relative;
+.about-us{
+/* position: relative; */
 bottom:591px;
 border: solid 0.7px ;
 border-color: #c37e00be;
@@ -114,10 +114,14 @@ margin-left: auto;
 padding: auto;
 height: 350px;
 border-radius: 14px;
-
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    bottom: 268px;
 box-shadow: 0 0 15px 4px rgba(212, 160, 23, 0.35),
                 0 4px 20px rgba(139, 69, 19, 0.9);
 } 
+
 .about-us h2{
     color:rgb(251, 214, 159);
 }
@@ -134,7 +138,6 @@ margin-left: 30px;
 
 .map{
     margin-top: 10px;
-
      box-shadow: 0 0 15px 4px rgba(212, 160, 23, 0.35),
                 0 4px 20px rgba(139, 69, 19, 0.9);
     transition: box-shadow 0.3s ease;
@@ -146,3 +149,50 @@ margin-left: 30px;
 
 
 
+header{
+    position: sticky;
+    top: 0;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 0px 5px 0px var(--maincolor);
+    padding: 15px 25px;
+    z-index: 10000;
+}
+header h2{
+    font-size: 30px;
+
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    font-size: 20px;
+    gap: 20px;
+}
+nav a{
+    text-decoration: none;
+    color: var(--maincolor);
+    font-weight: 500;
+    position: relative;
+}
+nav a::after{
+    content: "";
+    position: absolute;
+    width: 0%;
+    left: 0px;
+    bottom: -5px;
+    height: 2px;
+    background-color: var(--maincolor);
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
+}
+nav a:hover::after{
+    width: 100%;
+}
+nav a:hover{
+    color: white;
+}

@@ -81,7 +81,6 @@ nav a:hover{
     -moz-transition: .3s;
     -ms-transition: .3s;
     -o-transition: .3s;
-
 }
 .menu-links a:hover{
     color: white;
@@ -129,10 +128,10 @@ h3{
     -o-transform:scale(1.03);
 }
 h4{
-font-size:28px;
-margin:40px 0 10px;
-color:gold;
-text-align:center;
+    font-size:28px;
+    margin:40px 0 10px;
+    color:gold;
+    text-align:center;
 }
 hr{
     width: 120px;
@@ -192,7 +191,7 @@ hr{
         -moz-transform: translateY(0);
         -ms-transform: translateY(0);
         -o-transform: translateY(0);
-}
+    }
 }
 .item:hover{
     transform: translateY(-5px);
