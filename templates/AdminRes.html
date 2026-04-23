@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Reservations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #3e3e3e;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #c79f00;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgb(198, 168, 0);
+        }
+
+        th {
+            background: #222;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding:  16px;
+            border-bottom: 1px solid rgb(198, 168, 0);
+        }
+
+        tr:hover {
+            background: rgb(198, 168, 0);
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>All Reservations</h1>
+
+    {% if reservations %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in reservations %}
+            <tr>
+                <td>{{ res.id }}</td>
+                <td>{{ res.name }}</td>
+                <td>{{ res.email }}</td>
+                <td>{{ res.phone }}</td>
+                <td>{{ res.date }}</td>
+                <td>{{ res.time }}</td>
+                <td>{{ res.message or '—' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="no-data">No reservations yet.</p>
+    {% endif %}
+
+
+<script>
+    alert("Welcome to the admin panel! Here you can view all reservations");
+</script>
+
+
+</body>
+</html>
