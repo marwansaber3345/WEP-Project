@@ -1,7 +1,7 @@
 :root{
-    --backcolor: rgb(80, 0, 0);
-    --maincolor: gold;
-    --subcolor: rgb(156, 19, 19);
+    --backcolor: rgb(37, 36, 36);
+    color: rgb(245, 230, 194) !important;
+    --subcolor:#C8933F;
 }
 *{
     padding: 0;
@@ -13,51 +13,50 @@ body{
     color: var(--maincolor);
 }
 
-header{
-    position: sticky;
-    top: 0;
-    background-color: rgb(0, 0, 0);
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0px 0px 5px 0px var(--maincolor);
-    padding: 15px 25px;
-    z-index: 10000;
+    background-color: rgba(10, 10, 10, 0.95);
+    padding: 20px 50px;
+    border-bottom: 1px solid #222;
+    position: sticky; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; 
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+    will-change: transform, height, opacity;
+    transform: translateY(0);
+    pointer-events: auto;
 }
-header h2{
-    font-size: 30px;
+
+.logo {
+    color: #d4d4bc; 
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
-nav ul{
+
+nav ul {
     list-style: none;
     display: flex;
-    font-size: 20px;
-    gap: 20px;
+    gap: 25px;
 }
-nav a{
+
+nav ul li a {
     text-decoration: none;
-    color: var(--maincolor);
-    font-weight: 500;
-    position: relative;
+    color: #d4d4bc;
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-block; 
+    transition: color 0.3s ease, transform 0.2s ease;
 }
-nav a::after{
-    content: "";
-    position: absolute;
-    width: 0%;
-    left: 0px;
-    bottom: -5px;
-    height: 2px;
-    background-color: var(--maincolor);
-    transition: 0.3s;
-    -webkit-transition: 0.3s;
-    -moz-transition: 0.3s;
-    -ms-transition: 0.3s;
-    -o-transition: 0.3s;
-}
-nav a:hover::after{
-    width: 100%;
-}
-nav a:hover{
-    color: white;
+
+nav ul li a:hover {
+    color: #ffffff;
+    transform: scale(1.2); 
 }
 .menu-links{
     display: flex;
@@ -130,7 +129,7 @@ h3{
 h4{
     font-size:28px;
     margin:40px 0 10px;
-    color:gold;
+    color: rgb(245, 230, 194) !important;
     text-align:center;
 }
 hr{

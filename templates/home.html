@@ -4,17 +4,18 @@
     <title>La Cascada Restaurant</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/home.css">
+    <link rel="stylesheet" href="static\home.css">
 </head>
 <body>
 
-
-
-
-
 <header>
-    <div class="logo">La Cascada Restaurant</div>
-    <nav>
+    <div class="logo">
+        <div class="logo-text">
+            <span class="main-title">La Cascada</span>
+            <span class="sub-title">Restaurant</span>
+        </div>
+    </div>
+<nav>
     <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('menu') }}">Menu</a></li>
@@ -24,39 +25,32 @@
 </nav>
 </header>
 
-
-
-
-
-
 <main>
-<div class="home-background">
-    <video autoplay muted loop playsinline class="bg-video">
-        <source src="../static/misc/background-cooking.mp4" type="video/mp4">
-    </video>
-    <div class="hero-text">
-        <h1>La Cascada Restaurant</h1>
-        <p>A fine taste of elegance</p>
-    </div>
-</div>
-
-<section class="content-area">
-    <div class="content-overlay">
-        <h1 class="top-tag">جرب ميضرش</h1>
-        <p class="main-headline">مش أول مرة تاخد قرار غلط يعني</p>
-        
-        <div class="button-container">
-            <button>حجز طاولة</button>
-            <button>عرض القائمة</button>
+    <div class="home-background">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="static\misc/background-cooking.mp4" type="video/mp4">
+        </video>
+        <div class="hero-text">
+            <div class="logo-text hero-logo">
+                <span class="main-title">La Cascada</span>
+                <span class="sub-title">Restaurant</span>
+            </div>
+            <p>A fine taste of elegance</p>
         </div>
     </div>
-</section>
 
+    <section class="content-area">
+        <div class="content-overlay">
+            <h1 class="top-tag">جرب ميضرش</h1>
+            <p class="main-headline">مش أول مرة تاخد قرار غلط يعني</p>
+            
+        <div class="button-container">
+            <a href="{{ url_for('reservation_page') }}"><button>حجز طاولة</button></a>
+            <a href="{{ url_for('menu') }}"><button>عرض القائمة</button></a>
+        </div>
+        </div>
+    </section>
 </main>
-
-
-
-
 
 <script>
     window.addEventListener('scroll', () => {
@@ -67,8 +61,6 @@
         }
     });
 </script>
-
-
 
 </body>
 </html>

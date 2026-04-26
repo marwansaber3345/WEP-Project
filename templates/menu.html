@@ -1,232 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Menu</title>
-        <link rel="stylesheet" href="static/style.css">
-    </head>
-    <body>
-        <header>
-            <h2>La Cascada Restaurant</h2>
-            <nav>
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="reservation.html">Reservation</a></li>
-                    
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </nav>
-        </header>
 
-        <div class="menu-links">
-            <a href="#iftar-menu">IFTAR MENU</a>
-            <a href="#suhoor-menu">SUHOOR MENU</a>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Menu | La Cascada</title>
+
+    <link rel="stylesheet" href="static\menu.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-text">
+
+            <span class="main-title">La Cascada</span>
+
+            <span class="sub-title">Restaurant</span>
+
         </div>
 
-        <section class="iftar-menu" id="iftar-menu">
-            <h3>IFTAR MENU</h3>
-            <div class="category-links">
-                <a href="#main-dishes">Main Dishes</a>
-                <a href="#soup">Soup</a>
-                <a href="#ramadan-drinks">Ramadan Drinks</a>
-            </div>
-            <h4>Main Dishes</h4>
-            <hr>
-            <section id="main-dishes">
+    </div>
+
+<nav>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('menu') }}">Menu</a></li>
+        <li><a href="{{ url_for('reservation_page') }}">Reservation</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+    </ul>
+</nav>
+
+</header>
+
+
+
+<main>
+
+    <section class="menu-hero">
+
+        <h1>Our Menu</h1>
+
+        <div class="menu-links">
+
+            <a href="#iftar-menu">IFTAR MENU</a>
+
+            <a href="#suhoor-menu">SUHOOR MENU</a>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="menu-section" id="iftar-menu">
+
+        <h2 class="section-title">IFTAR MENU</h2>
+
+        <div class="category-links">
+
+            <a href="#main-dishes">Main Dishes</a>
+
+            <a href="#soup">Soup</a>
+
+            <a href="#ramadan-drinks">Ramadan Drinks</a>
+
+        </div>
+
+
+
+        <div class="menu-group">
+
+            <h3 id="main-dishes">Main Dishes</h3>
+
+            <div class="grid">
+
                 <div class="item">
-                    <img src="static/images/file_00000000ef40720a9f85f6d7844a9627.png" alt="jhg">
+
+                    <div class="img-container"><img src="static/images/file_00000000ef40720a9f85f6d7844a9627.png" alt="Mixed Grill"></div>
+
                     <h5>Mixed Grill</h5>
+
                     <p>(2 Kofta - 1 Shish Tawook - Grilled chicken breast)</p>
-                    <span>500 LE</span>
+
+                    <span class="price">500 LE</span>
+
                 </div>
+
                 <div class="item">
-                    <img src="static/images/file_00000000a1a8720a8c110a51990507f2.png" alt="">
+
+                    <div class="img-container"><img src="static/images/file_00000000a1a8720a8c110a51990507f2.png" alt="Half Grilled chicken"></div>
+
                     <h5>Half Grilled chicken</h5>
-                    <span>400 LE</span>
+
+                    <span class="price">400 LE</span>
+
                 </div>
+
                 <div class="item">
-                    <img src="static/images/meatWithOnions.png" alt="">
+
+                    <div class="img-container"><img src="static/images/meatWithOnions.png" alt="Meat Taaine"></div>
+
                     <h5>Meat Taaine with Onions</h5>
-                    <span>450 LE</span>
+
+                    <span class="price">450 LE</span>
+
                 </div>
+
                 <div class="item">
-                    <img src="static/images/grillesKofta.png" alt="">
+
+                    <div class="img-container"><img src="static/images/grillesKofta.png" alt="Kofta"></div>
+
                     <h5>Grilled Kofta Plate</h5>
-                    <span>400 LE</span>
+
+                    <span class="price">400 LE</span>
+
                 </div>
-                <div class="item">
-                    <img src="static/images/shish.png" alt="">
-                    <h5>Shish Tawook Plate</h5>
-                    <span>400 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/ch liver.png" alt="">
-                    <h5>chicken Liver & Hearts</h5>
-                    <span>350 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/beef liver (1).png" alt="">
-                    <h5>Beef Liver Plate</h5>
-                    <span>350 LE</span>
-                </div>
-            </section>
+
+            </div>
+            <center>
             <p class="note">All main dishes are served with: Rice + Green Salad</p>
+            </center>
+        </div>
 
-            <h4>Soup</h4>
-            <hr>
-            <section id="soup">
+
+
+        <div class="menu-group">
+
+            <h3 id="soup">Soup</h3>
+
+            <div class="grid">
+
                 <div class="item">
-                    <img src="static/images/orzo.png" alt="">
+
+                    <div class="img-container"><img src="static/images/orzo.png" alt="Orzo"></div>
+
                     <h5>Orzo Soup</h5>
-                    <span>55 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/vegetavble.png" alt="">
-                    <h5>Vegetable Soup</h5>
-                    <span>50 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/ch no soup.png" alt="">
-                    <h5>Chicken Noodle Soup</h5>
-                    <span>70 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/mashr.png" alt="">
-                    <h5>Mushroom Soup</h5>
-                    <span>70 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/seafoud.png" alt="">
-                    <h5>Seafood Soup</h5>
-                    <span>100 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/lentil.png" alt="">
-                    <h5>Lentil Soup</h5>
-                    <span>50 LE</span>
-                </div>
-            </section>
 
-            <h4>Ramadan Drinks</h4>
-            <hr>
-            <section id="ramadan-drinks">
-                <div class="item">
-                    <img src="static/images/tamr.png" alt="">
-                    <h5>Tamr Hindi</h5>
-                    <span>40 LE</span>
+                    <span class="price">55 LE</span>
+
                 </div>
+
                 <div class="item">
-                    <img src="static/images/amrEldin.png" alt="">
-                    <h5>Amar El-din</h5>
-                    <span>45 LE</span>
+
+                    <div class="img-container"><img src="static/images/vegetavble.png" alt="Vegetable"></div>
+
+                    <h5>Vegetable Soup</h5>
+
+                    <span class="price">50 LE</span>
+
                 </div>
-                <div class="item">
-                    <img src="static/images/somt.png" alt="">
-                    <h5>Qamar El-din Smoothie</h5>
-                    <p>Thick apricot smoothie blended with ice and fresh cream</p>
-                    <span>70 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/dateShake.png" alt="">
-                    <h5>Date Shake</h5>
-                    <p>A nourishing blend of milk, dates, cardamom, and sometimes yogurt</p>
-                    <span>65 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/sobia (1).png" alt="">
-                    <h5>Sobia</h5>
-                    <p>Traditional coconut milk drink with a sweet creamy taste</p>
-                    <span>45 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/kar.png" alt="">
-                    <h5>Karkade</h5>
-                    <p>Refreshing hibiscus drink served cold or hot, rich in flavor</p>
-                    <span>40 LE</span>
-                </div>
-            </section>
-        </section>
-        <section class="suhoor-menu" id="suhoor-menu">
-            <h3>SUHOOR MENU</h3>
-            <div class="category-links">
-                <a href="#foul">Foul</a>
-                <a href="#egg">Egg</a>
-                <a href="#yogurt">Yogurt</a>
+
             </div>
 
-            <h4>Foul</h4>
-            <hr>
-            <section id="foul">
+        </div>
+
+    </section>
+
+
+
+    <section class="menu-section" id="suhoor-menu">
+
+        <h2 class="section-title">SUHOOR MENU</h2>
+
+        <div class="category-links">
+
+            <a href="#foul">Foul</a>
+
+            <a href="#egg">Eggs</a>
+
+            <a href="#yogurt">Yogurt</a>
+
+        </div>
+
+       
+
+        <div class="menu-group">
+
+            <h3 id="foul">Foul</h3>
+
+            <div class="grid">
+
                 <div class="item">
-                    <img src="static/images/spicyFoul.png" alt="">
+
+                    <div class="img-container"><img src="static/images/spicyFoul.png" alt="Spicy Foul"></div>
+
                     <h5>Spicy Foul with Oil</h5>
-                    <span>50 LE</span>
+
+                    <span class="price">50 LE</span>
+
                 </div>
+
                 <div class="item">
-                    <img src="static/images/butterFoul.png" alt="">
+
+                    <div class="img-container"><img src="static/images/butterFoul.png" alt="Butter Foul"></div>
+
                     <h5>Foul with Butter</h5>
-                    <span>50 LE</span>
+
+                    <span class="price">50 LE</span>
+
                 </div>
-                <div class="item">
-                    <img src="static/images/oliveOil.png" alt="">
-                    <h5>Foul with Olive Oil</h5>
-                    <span>50 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/alex.png" alt="">
-                    <h5>Alexandrian Foul</h5>
-                    <span>60 LE</span>
-                </div>
-            </section>
-            <h4>Eggs</h4>
-            <hr>
-            <section id="egg">
-                <div class="item">
-                    <img src="static/images/eggPastrma.png" alt="">
-                    <h5>Egg with Pastrami</h5>
-                    <span>100 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/spanishOmlette.png" alt="">
-                    <h5>Spanish Omelette</h5>
-                    <span>80 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/boiledegg.png" alt="">
-                    <h5>Boiled Egg</h5>
-                    <span>70 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/omlette.png" alt="">
-                    <h5>Omelette</h5>
-                    <span>70 LE</span>
-                </div>
-            </section>
-            <h4>Yogurt</h4>
-            <hr>
-            <section id="yogurt">
-                <div class="item">
-                    <img src="static/images/peachYogurt.png" alt="">
-                    <h5>Peach Yogurt</h5>
-                    <span>90 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/strYogurt.png" alt="">
-                    <h5>Stawberry Yogurt</h5>
-                    <span>90 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/plainYogurt.png" alt="">
-                    <h5>Plain Yogurt</h5>
-                    <span>70 LE</span>
-                </div>
-                <div class="item">
-                    <img src="static/images/fruitYogurt.png" alt="">
-                    <h5>Fruit Yogurt</h5>
-                    <span>95 LE</span>
-                </div>
-            </section>
-        </section>
-    </body>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+</body>
+
 </html>

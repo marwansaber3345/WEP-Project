@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+:root {
+    --bg-dark: #0a0a0a;
+    --accent-gold: #C8933F;
+    --text-beige: #d4d4bc;
+    --card-bg: #161616;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: white;
+    line-height: 1.6;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    cursor: default;
+}
+.main-title {
+    font-family: 'Times New Roman', serif; /* Or 'Playfair Display' */
+    font-size: 32px;
+    font-weight: 700;
+    color: #C8933F;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+.sub-title {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #C8933F;
+    letter-spacing: 3px;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.sub-title::before,
+.sub-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #C8933F);
+    margin: 0 10px;
+}
+.sub-title::after {
+    background: linear-gradient(to left, transparent, #C8933F);
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: rgba(10, 10, 10, 0.95);
+    border-bottom: 1px solid #222;
+}
+
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-beige);
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Hero Section */
+.about-hero {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(10,10,10,1)), url('./misc/Gemini_Generated_Image_8w9dnn8w9dnn8w9d.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 70px;
+    color: var(--text-beige);
+    margin-bottom: 10px;
+}
+
+.about-hero p {
+    font-size: 20px;
+    color: var(--accent-gold);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.gold-title {
+    font-family: 'Cairo', sans-serif;
+    color: var(--accent-gold);
+    font-size: 35px;
+    margin-bottom: 25px;
+}
+
+.text-block p {
+    margin-bottom: 20px;
+    color: #ccc;
+    font-size: 18px;
+}
+
+.image-block img {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid var(--accent-gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Features/Specialties */
+.specialties-section {
+    background-color: #0f0f0f;
+}
+
+.center-title {
+    font-family: 'Cairo', sans-serif;
+    text-align: center;
+    font-size: 40px;
+    color: var(--text-beige);
+    margin-bottom: 50px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid #222;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    border-color: var(--accent-gold);
+    transform: translateY(-10px);
+}
+
+.feature-card h3 {
+    font-family: 'Cairo', sans-serif;
+    color: var(--accent-gold);
+    margin-bottom: 15px;
+}
+
+/* CTA Section */
+.cta-section {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.8)), url('./misc/Gemini_Generated_Image_8w9dnn8w9dnn8w9d.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.cta-section h2 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 45px;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: 'Cairo', sans-serif;
+    transition: 0.3s;
+    background: var(--accent-gold);
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+@media (max-width: 768px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .about-hero h1 { font-size: 45px; }
+    header { flex-direction: column; gap: 15px; }
+}   
