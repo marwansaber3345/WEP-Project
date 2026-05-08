@@ -60,29 +60,50 @@ def handle_reserve():
         "message": request.form.get("message"),
     }
 
-    # 2. Create the database record
-    new_res = Reservation(**res_data)
-
     try:
-        # Save to SQLite database
-        db.session.add(new_res)
-        db.session.commit()
-        print(f"Saved: {new_res.name} for {new_res.date} at {new_res.time}")
-
-        # 3. Trigger Power Automate
+        # 2. ONLY Trigger Power Automate (Do NOT save to DB yet)
         # PASTE YOUR COPIED URL BELOW BETWEEN THE QUOTES
         pa_url = "https://defaultd6dccdf42d0e4688a8a88c9dae615c.83.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b586997ea7624ae9987b68ecd0f3a76e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CWiOivUVsy-5pVyodBvNw6EUAvy_4zYiUtChoZLDi_U"
 
         # Send the JSON data to the flow
         requests.post(pa_url, json=res_data)
-        print("Power Automate flow triggered successfully!")
+        print("Power Automate triggered successfully! Waiting for Admin approval.")
 
     except Exception as e:
         print(f" Error: {e}")
-        db.session.rollback()
 
     # Redirect back to the reservation page
     return redirect(url_for("reservation_page"))
+
+
+# --- NEW ROUTE: Webhook for Power Automate to call upon Approval ---
+@app.route("/webhook/approve", methods=["POST"])
+def approve_reservation():
+    # Power Automate will send the data back here as JSON
+    data = request.get_json()
+
+    if not data:
+        return {"status": "error", "message": "No data received"}, 400
+
+    # Create the database record from the approved data
+    new_res = Reservation(
+        name=data.get("name"),
+        email=data.get("email"),
+        phone=data.get("phone"),
+        date=data.get("date"),
+        time=data.get("time"),
+        message=data.get("message"),
+    )
+
+    try:
+        db.session.add(new_res)
+        db.session.commit()
+        print(f"Approved & Saved to DB: {new_res.name} for {new_res.date}")
+        return {"status": "success", "message": "Reservation added to DB"}, 200
+    except Exception as e:
+        print(f"Database Error: {e}")
+        db.session.rollback()
+        return {"status": "error", "message": "Failed to save to DB"}, 500
 
 
 @app.route("/admin/reservations")
@@ -94,4 +115,6 @@ def view_reservations():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    # This change allows the server to tell Flask which port to use
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
