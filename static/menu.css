@@ -19,17 +19,27 @@
 
 html {
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
-html::-webkit-scrollbar { 
-    display: none; /* Chrome/Safari */
+html::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 body {
     background-color: var(--bg-dark);
     color: white;
     padding-bottom: 20px;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: transparent;
+    /* Or a very subtle color like #333 */
+    margin: 10px 0;
 }
 
 /* 4. Header & Navigation */
@@ -109,7 +119,7 @@ nav ul li a:hover {
 .menu-hero {
     padding: 100px 50px 50px;
     text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(10,10,10,1)), url('./misc/Gemini_Generated_Image_8w9dnn8w9dnn8w9d.png');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(10, 10, 10, 1)), url('./misc/Gemini_Generated_Image_8w9dnn8w9dnn8w9d.png');
     background-size: cover;
     background-position: center;
 }
@@ -122,7 +132,8 @@ nav ul li a:hover {
 }
 
 /* 6. Buttons & Links */
-.menu-links, .category-links {
+.menu-links,
+.category-links {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -130,7 +141,8 @@ nav ul li a:hover {
     flex-wrap: wrap;
 }
 
-.menu-links a, .category-links a {
+.menu-links a,
+.category-links a {
     text-decoration: none;
     font-family: 'Cairo', sans-serif;
     padding: 12px 30px;
@@ -141,7 +153,8 @@ nav ul li a:hover {
     transition: 0.4s;
 }
 
-.menu-links a:hover, .category-links a:hover {
+.menu-links a:hover,
+.category-links a:hover {
     background-color: var(--accent-gold);
     color: white;
     transform: translateY(-3px);
