@@ -1,228 +1,230 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Menu | La Cascada</title>
-
-    <link rel="stylesheet" href="static\menu.css">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lang.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-
 </head>
-
 <body>
 
-
-
 <header>
-
     <div class="logo">
-
         <div class="logo-text">
-
             <span class="main-title">La Cascada</span>
-
             <span class="sub-title">Restaurant</span>
-
         </div>
-
     </div>
-
-<nav>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('menu') }}">Menu</a></li>
-        <li><a href="{{ url_for('reservation_page') }}">Reservation</a></li>
-        <li><a href="{{ url_for('about') }}">About</a></li>
-    </ul>
-</nav>
-
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}"             data-i18n="nav.home">Home</a></li>
+            <li><a href="{{ url_for('menu') }}"             data-i18n="nav.menu">Menu</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" data-i18n="nav.reservation">Reservation</a></li>
+            <li><a href="{{ url_for('about') }}"            data-i18n="nav.about">About</a></li>
+        </ul>
+        <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">العربية</button>
+    </nav>
 </header>
-
-
 
 <main>
 
+    <!-- ══ CAROUSEL ══════════════════════════════════════════════════════ -->
+    <!-- dir="ltr" overrides the page-level dir="rtl" for this whole section.
+         Without it, the overflow:hidden container shifts its visible window
+         to the right edge in RTL mode, showing the wrong end of the track. -->
+    <section class="most-viewed" dir="ltr">
+        <hr>
+        <div class="mv-track-wrapper">
+            <div class="mv-track">
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/file_00000000ef40720a9f85f6d7844a9627.png') }}" alt="Mixed Grill"></div><div class="mv-label" data-en="Mixed Grill" data-ar="مشاوي مشكلة">Mixed Grill</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/shish.png') }}" alt="Shish Tawook"></div><div class="mv-label" data-en="Shish Tawook" data-ar="شيش طاووق">Shish Tawook</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/orzo.png') }}" alt="Orzo Soup"></div><div class="mv-label" data-en="Orzo Soup" data-ar="شوربة شعيرية">Orzo Soup</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/seafoud.png') }}" alt="Seafood Soup"></div><div class="mv-label" data-en="Seafood Soup" data-ar="شوربة مأكولات بحرية">Seafood Soup</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/grillesKofta.png') }}" alt="Grilled Kofta"></div><div class="mv-label" data-en="Grilled Kofta" data-ar="كفتة مشوية">Grilled Kofta</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/mashr.png') }}" alt="Mushroom Soup"></div><div class="mv-label" data-en="Mushroom Soup" data-ar="شوربة مشروم">Mushroom Soup</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/kar.png') }}" alt="Karkade"></div><div class="mv-label" data-en="Karkade" data-ar="كركديه">Karkade</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/dateShake.png') }}" alt="Date Shake"></div><div class="mv-label" data-en="Date Shake" data-ar="شيك التمر">Date Shake</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/somt.png') }}" alt="Qamar El-din Smoothie"></div><div class="mv-label" data-en="Qamar El-din" data-ar="قمر الدين">Qamar El-din</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/file_00000000a1a8720a8c110a51990507f2.png') }}" alt="Grilled Chicken"></div><div class="mv-label" data-en="Grilled Chicken" data-ar="دجاج مشوي">Grilled Chicken</div></div>
+                <!-- duplicate set for seamless loop -->
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/file_00000000ef40720a9f85f6d7844a9627.png') }}" alt="Mixed Grill"></div><div class="mv-label" data-en="Mixed Grill" data-ar="مشاوي مشكلة">Mixed Grill</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/shish.png') }}" alt="Shish Tawook"></div><div class="mv-label" data-en="Shish Tawook" data-ar="شيش طاووق">Shish Tawook</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/orzo.png') }}" alt="Orzo Soup"></div><div class="mv-label" data-en="Orzo Soup" data-ar="شوربة شعيرية">Orzo Soup</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/seafoud.png') }}" alt="Seafood Soup"></div><div class="mv-label" data-en="Seafood Soup" data-ar="شوربة مأكولات بحرية">Seafood Soup</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/grillesKofta.png') }}" alt="Grilled Kofta"></div><div class="mv-label" data-en="Grilled Kofta" data-ar="كفتة مشوية">Grilled Kofta</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/mashr.png') }}" alt="Mushroom Soup"></div><div class="mv-label" data-en="Mushroom Soup" data-ar="شوربة مشروم">Mushroom Soup</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/kar.png') }}" alt="Karkade"></div><div class="mv-label" data-en="Karkade" data-ar="كركديه">Karkade</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/dateShake.png') }}" alt="Date Shake"></div><div class="mv-label" data-en="Date Shake" data-ar="شيك التمر">Date Shake</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/somt.png') }}" alt="Qamar El-din Smoothie"></div><div class="mv-label" data-en="Qamar El-din" data-ar="قمر الدين">Qamar El-din</div></div>
+                <div class="mv-card"><div class="img-wrap"><img src="{{ url_for('static',filename='images/file_00000000a1a8720a8c110a51990507f2.png') }}" alt="Grilled Chicken"></div><div class="mv-label" data-en="Grilled Chicken" data-ar="دجاج مشوي">Grilled Chicken</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
     <section class="menu-hero">
-
-        <h1>Our Menu</h1>
-
+        <h1 data-i18n="menu.title">Our Menu</h1>
         <div class="menu-links">
-
-            <a href="#iftar-menu">IFTAR MENU</a>
-
-            <a href="#suhoor-menu">SUHOOR MENU</a>
-
+            <a href="#iftar-menu"  data-i18n="menu.link.iftar">IFTAR MENU</a>
+            <a href="#suhoor-menu" data-i18n="menu.link.suhoor">SUHOOR MENU</a>
         </div>
-
     </section>
 
-
-
+    <!-- ══ IFTAR ══════════════════════════════════════════════════════════ -->
     <section class="menu-section" id="iftar-menu">
-
-        <h2 class="section-title">IFTAR MENU</h2>
-
+        <h2 class="section-title" data-i18n="menu.iftar">IFTAR MENU</h2>
         <div class="category-links">
-
-            <a href="#main-dishes">Main Dishes</a>
-
-            <a href="#soup">Soup</a>
-
-            <a href="#ramadan-drinks">Ramadan Drinks</a>
-
+            {% if iftar_main   %}<a href="#main-dishes"    data-i18n="menu.link.main">Main Dishes</a>{% endif %}
+            {% if iftar_soup   %}<a href="#soup"           data-i18n="menu.link.soup">Soup</a>{% endif %}
+            {% if iftar_drinks %}<a href="#ramadan-drinks" data-i18n="menu.link.drinks">Ramadan Drinks</a>{% endif %}
         </div>
 
-
-
+        {% if iftar_main %}
         <div class="menu-group">
-
-            <h3 id="main-dishes">Main Dishes</h3>
-
-            <div class="grid">
-
+            <h3 id="main-dishes" data-i18n="menu.cat.main">Main Dishes</h3><hr>
+            <div class="grid">{% for item in iftar_main %}
                 <div class="item">
-
-                    <div class="img-container"><img src="static/images/file_00000000ef40720a9f85f6d7844a9627.png" alt="Mixed Grill"></div>
-
-                    <h5>Mixed Grill</h5>
-
-                    <p>(2 Kofta - 1 Shish Tawook - Grilled chicken breast)</p>
-
-                    <span class="price">500 LE</span>
-
-                </div>
-
-                <div class="item">
-
-                    <div class="img-container"><img src="static/images/file_00000000a1a8720a8c110a51990507f2.png" alt="Half Grilled chicken"></div>
-
-                    <h5>Half Grilled chicken</h5>
-
-                    <span class="price">400 LE</span>
-
-                </div>
-
-                <div class="item">
-
-                    <div class="img-container"><img src="static/images/meatWithOnions.png" alt="Meat Taaine"></div>
-
-                    <h5>Meat Taaine with Onions</h5>
-
-                    <span class="price">450 LE</span>
-
-                </div>
-
-                <div class="item">
-
-                    <div class="img-container"><img src="static/images/grillesKofta.png" alt="Kofta"></div>
-
-                    <h5>Grilled Kofta Plate</h5>
-
-                    <span class="price">400 LE</span>
-
-                </div>
-
+                    <div class="img-container">{% if item.image %}<img src="{{ url_for('static',filename=item.image) }}" alt="{{ item.name_en }}">{% endif %}</div>
+                    <h5 data-en="{{ item.name_en }}" data-ar="{{ item.name_ar or item.name_en }}">{{ item.name_en }}</h5>
+                    {% if item.desc_en %}<p data-en="{{ item.desc_en }}" data-ar="{{ item.desc_ar or item.desc_en }}">{{ item.desc_en }}</p>{% endif %}
+                    <span class="price">{{ item.price|int }} LE</span>
+                </div>{% endfor %}
             </div>
-            <center>
-            <p class="note">All main dishes are served with: Rice + Green Salad</p>
-            </center>
-        </div>
+            <div style="text-align:center;padding:0 50px 30px;">
+                <p class="note" data-i18n="menu.served.note">All main dishes are served with: Rice + Green Salad</p>
+            </div>
+        </div>{% endif %}
 
-
-
+        {% if iftar_soup %}
         <div class="menu-group">
-
-            <h3 id="soup">Soup</h3>
-
-            <div class="grid">
-
+            <h3 id="soup" data-i18n="menu.cat.soup">Soup</h3><hr>
+            <div class="grid">{% for item in iftar_soup %}
                 <div class="item">
-
-                    <div class="img-container"><img src="static/images/orzo.png" alt="Orzo"></div>
-
-                    <h5>Orzo Soup</h5>
-
-                    <span class="price">55 LE</span>
-
-                </div>
-
-                <div class="item">
-
-                    <div class="img-container"><img src="static/images/vegetavble.png" alt="Vegetable"></div>
-
-                    <h5>Vegetable Soup</h5>
-
-                    <span class="price">50 LE</span>
-
-                </div>
-
+                    <div class="img-container">{% if item.image %}<img src="{{ url_for('static',filename=item.image) }}" alt="{{ item.name_en }}">{% endif %}</div>
+                    <h5 data-en="{{ item.name_en }}" data-ar="{{ item.name_ar or item.name_en }}">{{ item.name_en }}</h5>
+                    {% if item.desc_en %}<p data-en="{{ item.desc_en }}" data-ar="{{ item.desc_ar or item.desc_en }}">{{ item.desc_en }}</p>{% endif %}
+                    <span class="price">{{ item.price|int }} LE</span>
+                </div>{% endfor %}
             </div>
+        </div>{% endif %}
 
-        </div>
-
+        {% if iftar_drinks %}
+        <div class="menu-group">
+            <h3 id="ramadan-drinks" data-i18n="menu.cat.drinks">Ramadan Drinks</h3><hr>
+            <div class="grid">{% for item in iftar_drinks %}
+                <div class="item">
+                    <div class="img-container">{% if item.image %}<img src="{{ url_for('static',filename=item.image) }}" alt="{{ item.name_en }}">{% endif %}</div>
+                    <h5 data-en="{{ item.name_en }}" data-ar="{{ item.name_ar or item.name_en }}">{{ item.name_en }}</h5>
+                    {% if item.desc_en %}<p data-en="{{ item.desc_en }}" data-ar="{{ item.desc_ar or item.desc_en }}">{{ item.desc_en }}</p>{% endif %}
+                    <span class="price">{{ item.price|int }} LE</span>
+                </div>{% endfor %}
+            </div>
+        </div>{% endif %}
     </section>
 
-
-
+    <!-- ══ SUHOOR ══════════════════════════════════════════════════════════ -->
     <section class="menu-section" id="suhoor-menu">
-
-        <h2 class="section-title">SUHOOR MENU</h2>
-
+        <h2 class="section-title" data-i18n="menu.suhoor">SUHOOR MENU</h2>
         <div class="category-links">
-
-            <a href="#foul">Foul</a>
-
-            <a href="#egg">Eggs</a>
-
-            <a href="#yogurt">Yogurt</a>
-
+            {% if suhoor_foul   %}<a href="#foul"   data-i18n="menu.link.foul">Foul</a>{% endif %}
+            {% if suhoor_eggs   %}<a href="#egg"    data-i18n="menu.link.egg">Eggs</a>{% endif %}
+            {% if suhoor_yogurt %}<a href="#yogurt" data-i18n="menu.link.yogurt">Yogurt</a>{% endif %}
         </div>
 
-       
-
+        {% if suhoor_foul %}
         <div class="menu-group">
-
-            <h3 id="foul">Foul</h3>
-
-            <div class="grid">
-
+            <h3 id="foul" data-i18n="menu.cat.foul">Foul</h3><hr>
+            <div class="grid">{% for item in suhoor_foul %}
                 <div class="item">
-
-                    <div class="img-container"><img src="static/images/spicyFoul.png" alt="Spicy Foul"></div>
-
-                    <h5>Spicy Foul with Oil</h5>
-
-                    <span class="price">50 LE</span>
-
-                </div>
-
-                <div class="item">
-
-                    <div class="img-container"><img src="static/images/butterFoul.png" alt="Butter Foul"></div>
-
-                    <h5>Foul with Butter</h5>
-
-                    <span class="price">50 LE</span>
-
-                </div>
-
+                    <div class="img-container">{% if item.image %}<img src="{{ url_for('static',filename=item.image) }}" alt="{{ item.name_en }}">{% endif %}</div>
+                    <h5 data-en="{{ item.name_en }}" data-ar="{{ item.name_ar or item.name_en }}">{{ item.name_en }}</h5>
+                    {% if item.desc_en %}<p data-en="{{ item.desc_en }}" data-ar="{{ item.desc_ar or item.desc_en }}">{{ item.desc_en }}</p>{% endif %}
+                    <span class="price">{{ item.price|int }} LE</span>
+                </div>{% endfor %}
             </div>
+        </div>{% endif %}
 
-        </div>
+        {% if suhoor_eggs %}
+        <div class="menu-group">
+            <h3 id="egg" data-i18n="menu.cat.egg">Eggs</h3><hr>
+            <div class="grid">{% for item in suhoor_eggs %}
+                <div class="item">
+                    <div class="img-container">{% if item.image %}<img src="{{ url_for('static',filename=item.image) }}" alt="{{ item.name_en }}">{% endif %}</div>
+                    <h5 data-en="{{ item.name_en }}" data-ar="{{ item.name_ar or item.name_en }}">{{ item.name_en }}</h5>
+                    {% if item.desc_en %}<p data-en="{{ item.desc_en }}" data-ar="{{ item.desc_ar or item.desc_en }}">{{ item.desc_en }}</p>{% endif %}
+                    <span class="price">{{ item.price|int }} LE</span>
+                </div>{% endfor %}
+            </div>
+        </div>{% endif %}
 
+        {% if suhoor_yogurt %}
+        <div class="menu-group">
+            <h3 id="yogurt" data-i18n="menu.cat.yogurt">Yogurt</h3><hr>
+            <div class="grid">{% for item in suhoor_yogurt %}
+                <div class="item">
+                    <div class="img-container">{% if item.image %}<img src="{{ url_for('static',filename=item.image) }}" alt="{{ item.name_en }}">{% endif %}</div>
+                    <h5 data-en="{{ item.name_en }}" data-ar="{{ item.name_ar or item.name_en }}">{{ item.name_en }}</h5>
+                    {% if item.desc_en %}<p data-en="{{ item.desc_en }}" data-ar="{{ item.desc_ar or item.desc_en }}">{{ item.desc_en }}</p>{% endif %}
+                    <span class="price">{{ item.price|int }} LE</span>
+                </div>{% endfor %}
+            </div>
+        </div>{% endif %}
     </section>
 
 </main>
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
+<script>
+/* ═══════════════════════════════════════════════════════
+   Seamless infinite carousel — JS-driven
+   Why JS instead of CSS translateX(-50%):
+     CSS -50% is based on the element's own width. With
+     flex + margin-right, trailing margins may or may not
+     be counted depending on the browser, creating a small
+     drift every loop.  JS measures the exact pixel width
+     of the first set of cards and resets pos accordingly,
+     so the loop is mathematically perfect every time.
+   ═══════════════════════════════════════════════════════ */
+(function () {
+    const track = document.querySelector('.mv-track');
+    if (!track) return;
 
+    let paused = false;
+    let pos    = 0;
+    let half   = 0;     // pixel width of one set of cards (measured after load)
 
+    /* Measure the exact pixel width of the first N/2 cards including margins */
+    function measureHalf() {
+        const cards = track.querySelectorAll('.mv-card');
+        const n = Math.floor(cards.length / 2);   // 10
+        let w = 0;
+        for (let i = 0; i < n; i++) {
+            const mr = parseFloat(getComputedStyle(cards[i]).marginRight) || 0;
+            w += cards[i].offsetWidth + mr;
+        }
+        return w;
+    }
 
+    function step() {
+        if (!paused) {
+            pos += 1.3;                    // ≈78 px/s at 60 fps — adjust to taste
+            if (pos >= half) pos -= half;  // hard reset at exact boundary, no drift
+            track.style.transform = 'translateX(-' + pos.toFixed(2) + 'px)';
+        }
+        requestAnimationFrame(step);
+    }
+
+    /* Pause while hovered */
+    track.addEventListener('mouseenter', () => { paused = true;  });
+    track.addEventListener('mouseleave', () => { paused = false; });
+
+    /* Wait for images so offsetWidth is final */
+    window.addEventListener('load', function () {
+        half = measureHalf();
+        requestAnimationFrame(step);
+    });
+})();
+</script>
 </body>
-
 </html>

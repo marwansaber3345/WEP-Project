@@ -1,228 +1,177 @@
-/* 1. Imports */
+/* ═══════════════════════════════════════════════════════
+   menu.css — La Cascada  ·  Champagne & Charcoal palette
+   ═══════════════════════════════════════════════════════ */
+
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
 
-/* 2. Variables */
 :root {
-    --bg-dark: #0a0a0a;
-    --accent-gold: #C8933F;
-    --text-beige: #d4d4bc;
-    --card-bg: #161616;
+    --bg:          #0d0b09;
+    --bg-card:     #181410;
+    --bg-card2:    #201a13;
+    --gold:        #c8a84b;
+    --gold-hover:  #e5c570;
+    --gold-dim:    #96782e;
+    --gold-tint:   rgba(200,168,75,0.08);
+    --gold-border: rgba(200,168,75,0.22);
+    --cream:       #ede3d0;
+    --cream2:      #b0a08a;
+    --cream3:      #7a6a56;
+    --border:      #2e2418;
+    --header-bg:   rgba(13,11,9,0.97);
 }
 
-/* 3. Global Styles & Resets */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', 'Cairo', sans-serif;
-}
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Cairo','Segoe UI',sans-serif; }
 
-html {
-    scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
-}
+html { scroll-behavior:smooth; scrollbar-width:none; }
+html::-webkit-scrollbar { display:none; }
 
-html::-webkit-scrollbar { 
-    display: none; /* Chrome/Safari */
-}
+body { background-color:var(--bg); color:var(--cream); padding-bottom:20px; }
 
-body {
-    background-color: var(--bg-dark);
-    color: white;
-    padding-bottom: 20px;
-}
+hr { border:none; height:1px; background:transparent; margin:10px 0; }
 
-/* 4. Header & Navigation */
+/* ── Header ─────────────────────────────────────────────── */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(10, 10, 10, 0.98);
-    padding: 10px 50px;
-    border-bottom: 1px solid #222;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    display:flex; justify-content:space-between; align-items:center;
+    background-color:var(--header-bg);
+    padding:10px 50px;
+    border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:100;
 }
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1;
-    cursor: default;
+.logo-text { display:flex; flex-direction:column; align-items:center; line-height:1; cursor:default; }
+.main-title { font-family:'Times New Roman',serif; font-size:30px; font-weight:700; color:var(--gold); letter-spacing:1px; }
+.sub-title  {
+    font-size:12px; font-weight:400; color:var(--gold); letter-spacing:4px;
+    text-transform:uppercase; display:flex; align-items:center; width:100%;
 }
+.sub-title::before,.sub-title::after { content:""; flex:1; height:1px; margin:0 10px; }
+.sub-title::before { background:linear-gradient(to right,transparent,var(--gold)); }
+.sub-title::after  { background:linear-gradient(to left, transparent,var(--gold)); }
 
-.main-title {
-    font-family: 'Times New Roman', serif;
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--accent-gold);
-    letter-spacing: 1px;
+nav ul { list-style:none; display:flex; gap:25px; }
+nav ul li a { text-decoration:none; color:var(--cream2); font-size:15px; font-weight:600; transition:.3s; }
+nav ul li a:hover { color:var(--cream); }
+
+/* ── Carousel ───────────────────────────────────────────── */
+.most-viewed {
+    width:100vw; position:relative; left:50%; transform:translateX(-50%);
+    overflow:hidden; padding:30px 0 40px;
+    border-bottom:1px solid var(--border);
+    background-color:var(--bg-card);
 }
-
-.sub-title {
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--accent-gold);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    width: 100%;
+.mv-track-wrapper { width:100%; overflow:hidden; }
+.mv-track {
+    display:flex;
+    direction:ltr;   /* always LTR — carousel scrolls left regardless of page language */
+    width:max-content;
+    /* animation is driven by JS — see menu.html carousel script */
+    will-change:transform;
 }
-
-.sub-title::before,
-.sub-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--accent-gold));
-    margin: 0 10px;
+.mv-card {
+    width:280px; height:190px; overflow:hidden;
+    border:1px solid var(--border); flex-shrink:0;
+    position:relative; background-color:var(--bg-card);
+    transition:border-color .3s;
+    margin-right:14px;   /* gap lives here so each card is exactly 294px total */
 }
-
-.sub-title::after {
-    background: linear-gradient(to left, transparent, var(--accent-gold));
+.mv-card:hover { border-color:var(--gold); }
+.mv-card .img-wrap { width:100%; height:100%; }
+.mv-card img { width:100%; height:100%; object-fit:fill; display:block; transition:transform .4s; }
+.mv-card:hover img { transform:scale(1.07); }
+.mv-label {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(transparent,rgba(0,0,0,0.88));
+    color:var(--cream); font-size:14px; font-weight:600;
+    padding:22px 12px 10px; text-align:center;
+    font-family:'Cairo',sans-serif;
 }
+/* seamless scroll animation is handled in menu.html via requestAnimationFrame */
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: var(--text-beige);
-    font-size: 16px;
-    font-weight: 600;
-    transition: 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-}
-
-/* 5. Hero Section */
+/* ── Hero ───────────────────────────────────────────────── */
 .menu-hero {
-    padding: 100px 50px 50px;
-    text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(10,10,10,1)), url('./misc/Gemini_Generated_Image_8w9dnn8w9dnn8w9d.png');
-    background-size: cover;
-    background-position: center;
+    padding:90px 50px 50px;
+    text-align:center;
+    background:linear-gradient(rgba(0,0,0,0.72),rgba(13,11,9,1)),
+                url('./misc/Gemini_Generated_Image_8w9dnn8w9dnn8w9d.png');
+    background-size:cover; background-position:center;
 }
+.menu-hero h1 { font-size:58px; color:var(--cream); margin-bottom:32px; }
 
-.menu-hero h1 {
-    font-family: 'Cairo', sans-serif;
-    font-size: 60px;
-    color: var(--text-beige);
-    margin-bottom: 30px;
-}
-
-/* 6. Buttons & Links */
-.menu-links, .category-links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-}
+/* ── Nav Links ──────────────────────────────────────────── */
+.menu-links, .category-links { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.menu-links { margin-bottom:0; }
+.category-links { margin-bottom:50px; }
 
 .menu-links a, .category-links a {
-    text-decoration: none;
-    font-family: 'Cairo', sans-serif;
-    padding: 12px 30px;
-    border: 2px solid var(--accent-gold);
-    color: var(--accent-gold);
-    border-radius: 10px;
-    font-weight: 700;
-    transition: 0.4s;
+    text-decoration:none;
+    padding:9px 26px;
+    border:1px solid var(--gold-border);
+    color:var(--cream2);
+    font-size:14px; font-weight:600;
+    letter-spacing:3px; text-transform:uppercase;
+    transition:all .35s;
 }
-
 .menu-links a:hover, .category-links a:hover {
-    background-color: var(--accent-gold);
-    color: white;
-    transform: translateY(-3px);
+    border-color:var(--gold); color:var(--gold);
+    background:var(--gold-tint);
 }
 
-/* 7. Menu Grid & Items */
+/* ── Section Titles ─────────────────────────────────────── */
 .section-title {
-    font-family: 'Cairo', sans-serif;
-    text-align: center;
-    font-size: 40px;
-    color: var(--accent-gold);
-    margin: 60px 0 20px;
+    text-align:center; font-size:38px; color:var(--gold);
+    margin:60px 0 20px; letter-spacing:3px;
 }
-
 .menu-group h3 {
-    font-family: 'Cairo', sans-serif;
-    text-align: center;
-    color: var(--text-beige);
-    font-size: 28px;
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--accent-gold);
-    width: fit-content;
-    margin: 0 auto 30px;
-    padding-bottom: 5px;
+    text-align:center; color:var(--cream); font-size:26px;
+    border-bottom:1px solid var(--gold-border);
+    width:fit-content; margin:0 auto 26px; padding-bottom:8px;
 }
 
+/* ── Grid ───────────────────────────────────────────────── */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 0 8%;
-    max-width: 1400px;
-    margin: 0 auto;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:28px; padding:50px; max-width:1400px; margin:0 auto;
 }
 
+/* ── Item Cards ─────────────────────────────────────────── */
 .item {
-    background-color: var(--card-bg);
-    border: 1px solid #222;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    transition: 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color:var(--bg-card); border:1px solid var(--border);
+    padding:15px; text-align:center; transition:all .4s;
+    display:flex; flex-direction:column; align-items:center;
+    position:relative; overflow:hidden;
 }
-
-.item:hover {
-    border-color: var(--accent-gold);
-    transform: translateY(-10px);
+.item::before {
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(135deg,var(--gold-tint),transparent);
+    opacity:0; transition:opacity .4s;
 }
+.item:hover { border-color:var(--gold); transform:translateY(-8px) scale(1.015); }
+.item:hover::before { opacity:1; }
 
 .img-container {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 10px;
-    margin-bottom: 15px;
+    width:100%; height:220px; overflow:hidden;
+    margin-bottom:14px; display:flex;
+    justify-content:center; align-items:center;
+    background-color:var(--bg-card2);
+}
+.item img { width:100%; height:100%; object-fit:fill; transition:transform .5s; }
+.item:hover img { transform:scale(1.05); }
+
+.item h5 { font-size:19px; color:var(--cream); margin-bottom:8px; position:relative; }
+.item p  { font-size:13px; color:var(--cream3); margin-bottom:14px; min-height:38px; line-height:1.55; position:relative; }
+
+/* ── Price Badge ─────────────────────────────────────────── */
+.price {
+    color:var(--gold); font-size:14px; font-weight:700;
+    margin-top:auto; border:1px solid var(--gold-border);
+    padding:5px 16px; display:inline-block;
+    background:var(--gold-tint); position:relative;
+    letter-spacing:1px;
 }
 
-.item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
-}
-
-.item:hover img {
-    transform: scale(1.1);
-}
-
-.item h5 {
-    font-family: 'Cairo', sans-serif;
-    font-size: 20px;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.item p {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 15px;
-    min-height: 40px;
+/* ── Note ───────────────────────────────────────────────── */
+.note {
+    color:var(--cream2); font-size:14px;
+    border:1px solid var(--gold-border);
+    padding:10px 22px; display:inline-block;
+    background:var(--gold-tint); letter-spacing:.5px;
 }

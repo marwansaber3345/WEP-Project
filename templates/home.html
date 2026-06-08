@@ -4,10 +4,10 @@
     <title>La Cascada Restaurant</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static\home.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lang.css') }}">
 </head>
 <body>
-
 <header>
     <div class="logo">
         <div class="logo-text">
@@ -15,52 +15,46 @@
             <span class="sub-title">Restaurant</span>
         </div>
     </div>
-<nav>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('menu') }}">Menu</a></li>
-        <li><a href="{{ url_for('reservation_page') }}">Reservation</a></li>
-        <li><a href="{{ url_for('about') }}">About</a></li>
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}"             data-i18n="nav.home">Home</a></li>
+            <li><a href="{{ url_for('menu') }}"             data-i18n="nav.menu">Menu</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" data-i18n="nav.reservation">Reservation</a></li>
+            <li><a href="{{ url_for('about') }}"            data-i18n="nav.about">About</a></li>
+        </ul>
+        <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">العربية</button>
+    </nav>
 </header>
-
 <main>
     <div class="home-background">
         <video autoplay muted loop playsinline class="bg-video">
-            <source src="static\misc/background-cooking.mp4" type="video/mp4">
+            <source src="{{ url_for('static', filename='misc/background-cooking.mp4') }}" type="video/mp4">
         </video>
         <div class="hero-text">
             <div class="logo-text hero-logo">
                 <span class="main-title">La Cascada</span>
                 <span class="sub-title">Restaurant</span>
             </div>
-            <p>A fine taste of elegance</p>
+            <p data-i18n="home.hero">A fine taste of elegance</p>
         </div>
     </div>
 
     <section class="content-area">
         <div class="content-overlay">
-            <h1 class="top-tag">جرب ميضرش</h1>
-            <p class="main-headline">مش أول مرة تاخد قرار غلط يعني</p>
-            
-        <div class="button-container">
-            <a href="{{ url_for('reservation_page') }}"><button>حجز طاولة</button></a>
-            <a href="{{ url_for('menu') }}"><button>عرض القائمة</button></a>
-        </div>
+            <h1 class="top-tag"       data-i18n="home.tag">Give It a Try</h1>
+            <p  class="main-headline" data-i18n="home.headline">You've Made Questionable Decisions Before</p>
+            <div class="button-container">
+                <a href="{{ url_for('reservation_page') }}"><button data-i18n="home.btn.reserve">Reserve a Table</button></a>
+                <a href="{{ url_for('menu') }}"><button data-i18n="home.btn.menu">View Menu</button></a>
+            </div>
         </div>
     </section>
 </main>
-
 <script>
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) { 
-            document.body.classList.add('scrolled');
-        } else {
-            document.body.classList.remove('scrolled');
-        }
+        document.body.classList.toggle('scrolled', window.scrollY > 100);
     });
 </script>
-
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
 </body>
 </html>

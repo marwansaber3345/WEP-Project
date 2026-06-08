@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation | La Cascada</title>
-    <link rel="stylesheet" href="static\reservation.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reservation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lang.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -16,104 +17,305 @@
             <span class="sub-title">Restaurant</span>
         </div>
     </div>
-<nav>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('menu') }}">Menu</a></li>
-        <li><a href="{{ url_for('reservation_page') }}">Reservation</a></li>
-        <li><a href="{{ url_for('about') }}">About</a></li>
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}"             data-i18n="nav.home">Home</a></li>
+            <li><a href="{{ url_for('menu') }}"             data-i18n="nav.menu">Menu</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" data-i18n="nav.reservation">Reservation</a></li>
+            <li><a href="{{ url_for('about') }}"            data-i18n="nav.about">About</a></li>
+        </ul>
+        <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">العربية</button>
+    </nav>
 </header>
 
 <main>
     <section class="reservation-hero">
-        <h1>Reserve Your Table</h1>
-        <p>Join us for an evening you won't forget</p>
+        <h1 data-i18n="res.title">Reserve Your Table</h1>
+        <p  data-i18n="res.subtitle">Join us for an evening you won't forget</p>
         <div class="divider"></div>
     </section>
 
     <div class="reservation-container">
+
+        <!-- ── Form ── -->
         <div class="reservation-form">
-            <form action="{{ url_for('handle_reserve') }}" method="POST">
+            <form id="res-form" action="{{ url_for('handle_reserve') }}" method="POST" novalidate>
+
                 <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Marwan Saber Mohamed">
+                    <label for="name" data-i18n="res.lbl.name">Full Name</label>
+                    <input type="text" id="name" name="name"
+                           placeholder="Marwan Saber Mohamed"
+                           data-i18n-ph="ph.name" autocomplete="name">
+                    <span class="field-error" id="err-name">Please enter your full name.</span>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required placeholder="abcd@example.com">
+                        <label for="email" data-i18n="res.lbl.email">Email Address</label>
+                        <input type="email" id="email" name="email"
+                               placeholder="you@example.com"
+                               data-i18n-ph="ph.email" autocomplete="email">
+                        <span class="field-error" id="err-email">Please enter a valid email address.</span>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" name="phone" id="phone" required placeholder="01234567891">
+                        <label for="phone" data-i18n="res.lbl.phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone"
+                               placeholder="01234567891"
+                               data-i18n-ph="ph.phone"
+                               maxlength="15" inputmode="numeric">
+                        <span class="field-error" id="err-phone">Digits only · 8–15 numbers required.</span>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" id="date" name="date" required>
+                        <label for="date" data-i18n="res.lbl.date">Date</label>
+                        <input type="date" id="date" name="date">
+                        <span class="field-error" id="err-date">Please pick a date between today and 2 years ahead.</span>
                     </div>
                     <div class="form-group">
-                        <label for="time">Time</label>
-                        <input type="time" id="time" name="time" required>
+                        <label for="time" data-i18n="res.lbl.time">Time</label>
+                        <input type="time" id="time" name="time">
+                        <span class="field-error" id="err-time">Please select a time.</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="message">Special Requests</label>
-                    <textarea name="message" id="message" rows="4" placeholder="Any specific requirements?"></textarea>
+                    <label for="message" data-i18n="res.lbl.message">Special Requests</label>
+                    <textarea name="message" id="message" rows="4"
+                              placeholder="Any specific requirements?"
+                              data-i18n-ph="ph.message"></textarea>
                 </div>
 
-                <button type="submit" class="submit-button">Confirm Reservation →</button>
+                <button type="submit" class="submit-button" data-i18n="res.btn.submit">Confirm Reservation →</button>
             </form>
         </div>
 
+        <!-- ── Info Card ── -->
         <aside class="contact-info">
             <div class="info-card">
-                <h2>Visit Us</h2>
+                <h2 data-i18n="res.info.title">Visit Us</h2>
+
                 <div class="info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8933F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                         fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
                     <div>
-                        <p>Hurghada, Red Sea Governorate, Egypt</p>
-                        <span class="sub-text">Mohamed Saeid St - Hurghada, 84511</span>
+                        <p data-i18n="res.info.address">Hurghada, Red Sea Governorate, Egypt</p>
+                        <span class="sub-text" data-i18n="res.info.street">Mohamed Saeid St - Hurghada, 84511</span>
                     </div>
                 </div>
 
                 <div class="info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8933F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 9.81a19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 2.06 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                         fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 9.81a19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 2.06 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
                     <div>
                         <p>+20 155 408 9639</p>
-                        <a href="tel:+201554089639" class="sub-text">Call Now</a>
+                        <a href="tel:+201554089639" class="sub-text" data-i18n="res.info.call">Call Now</a>
                     </div>
                 </div>
 
                 <div class="info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8933F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                         fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="5"/>
+                        <circle cx="17.5" cy="6.5" r="1"/>
+                    </svg>
                     <div>
                         <p>lacascadabakeryhrg</p>
-                        <a href="https://instagram.com" class="sub-text">Our Instagram</a>
+                        <a href="https://www.instagram.com/lacascadabakeryhrg" target="_blank"
+                           class="sub-text" data-i18n="res.info.ig">Our Instagram</a>
                     </div>
                 </div>
 
                 <div class="info-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8933F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                         fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
                     <div>
-                        <p>Lunch: 12:00 - 14:30</p>
-                        <p>Dinner: 19:00 - 23:00</p>
+                        <p data-i18n="res.info.lunch">Lunch: 12:00 – 14:30</p>
+                        <p data-i18n="res.info.dinner">Dinner: 19:00 – 23:00</p>
                     </div>
                 </div>
             </div>
         </aside>
+
+    </div><!-- /reservation-container -->
+
+    <!-- ══ TALABAT ══════════════════════════════════════════ -->
+    <div class="talabat-section">
+        <div class="talabat-inner">
+            <div class="talabat-logo-badge"><span>t</span></div>
+            <h2 data-i18n="res.talabat.title">Order Online</h2>
+            <p  data-i18n="res.talabat.sub">Can't make it in? Order your favourites online</p>
+            <a href="https://www.talabat.com/egypt/la-cascada"
+               target="_blank" rel="noopener noreferrer"
+               class="talabat-btn" data-i18n="res.talabat.btn">
+               🛵&nbsp;&nbsp;Order on Talabat
+            </a>
+        </div>
     </div>
 
+    <!-- ══ MAP ══════════════════════════════════════════════ -->
     <div class="map-section">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.5645!2d33.8!3d27.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDEyJzAwLjAiTiAzM8KwNDgnMDAuMCJF!5e0!3m2!1sen!2seg!4v1610000000000" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.5645!2d33.8!3d27.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDEyJzAwLjAiTiAzM8KwNDgnMDAuMCJF!5e0!3m2!1sen!2seg!4v1610000000000"
+                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 </main>
 
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
+<script>
+// ═══════════════════════════════════════════════════════
+//  Reservation Form Validation
+// ═══════════════════════════════════════════════════════
+(function () {
+
+    // ── Grab all inputs ───────────────────────────────────
+    const nameInput  = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const dateInput  = document.getElementById('date');
+    const timeInput  = document.getElementById('time');
+
+    // ── Date constraints: today → today + 2 years ────────
+    const today   = new Date();
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 2);
+
+    // Use LOCAL date (getFullYear/Month/Date) not UTC (toISOString)
+    // toISOString() returns UTC — in Egypt (UTC+2/+3) times before ~2 AM
+    // give yesterday's date in UTC, making "today" appear as yesterday.
+    const fmt = d => {
+        const y  = d.getFullYear();
+        const m  = String(d.getMonth() + 1).padStart(2, '0');
+        const dy = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${dy}`;
+    };
+
+    // ── Helpers ───────────────────────────────────────────
+    function setValid(id)   { const el = document.getElementById(id); el.classList.add('is-valid');   el.classList.remove('is-invalid'); }
+    function setInvalid(id) { const el = document.getElementById(id); el.classList.add('is-invalid'); el.classList.remove('is-valid'); }
+    function showErr(id, msg) {
+        const el = document.getElementById('err-' + id);
+        if (msg) el.textContent = msg;
+        el.classList.add('show');
+    }
+    function hideErr(id) { document.getElementById('err-' + id).classList.remove('show'); }
+
+    function getNowHHMM() {
+        const n = new Date();
+        return n.getHours().toString().padStart(2, '0') + ':' + n.getMinutes().toString().padStart(2, '0');
+    }
+
+    // ── NAME: no digits allowed ───────────────────────────
+    nameInput.addEventListener('keypress', e => {
+        if (/[0-9]/.test(e.key)) e.preventDefault();
+    });
+    nameInput.addEventListener('input', function () {
+        const clean = this.value.replace(/[0-9]/g, '');
+        if (clean !== this.value) this.value = clean;
+    });
+    nameInput.addEventListener('paste', e => {
+        e.preventDefault();
+        const raw  = (e.clipboardData || window.clipboardData).getData('text').replace(/[0-9]/g, '');
+        const el   = nameInput;
+        const s    = el.selectionStart;
+        const en   = el.selectionEnd;
+        el.value   = el.value.slice(0, s) + raw + el.value.slice(en);
+    });
+    nameInput.addEventListener('blur', function () {
+        if (this.value.trim().length >= 2) { setValid('name');  hideErr('name'); }
+        else { setInvalid('name'); showErr('name', 'Please enter your full name.'); }
+    });
+
+    // ── EMAIL ─────────────────────────────────────────────
+    emailInput.addEventListener('blur', function () {
+        const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim());
+        if (ok) { setValid('email');  hideErr('email'); }
+        else    { setInvalid('email'); showErr('email', 'Please enter a valid email address.'); }
+    });
+
+    // ── PHONE: digits only, 8-15 chars ───────────────────
+    phoneInput.addEventListener('keypress', e => {
+        if (!/[0-9]/.test(e.key)) e.preventDefault();
+    });
+    phoneInput.addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '');
+    });
+    phoneInput.addEventListener('paste', e => {
+        e.preventDefault();
+        const clean = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+        phoneInput.value = clean.slice(0, 15);
+    });
+    phoneInput.addEventListener('blur', function () {
+        const digits = this.value.replace(/\D/g, '');
+        if (digits.length >= 8 && digits.length <= 15) { setValid('phone');  hideErr('phone'); }
+        else { setInvalid('phone'); showErr('phone', 'Digits only · 8–15 numbers required.'); }
+    });
+
+    // ── DATE ─────────────────────────────────────────────
+    dateInput.addEventListener('change', function () {
+        if (this.value && this.value >= fmt(today) && this.value <= fmt(maxDate)) {
+            setValid('date'); hideErr('date');
+            // Re-validate time if already entered (today's time may now be stale)
+            if (timeInput.value) validateTime();
+        } else {
+            setInvalid('date'); showErr('date', 'Please pick a date between today and 2 years ahead.');
+        }
+    });
+
+    // ── TIME: required + if today must be >= now ──────────
+    function validateTime() {
+        const tv = timeInput.value;
+        const dv = dateInput.value;
+        if (!tv) {
+            setInvalid('time'); showErr('time', 'Please select a time.'); return false;
+        }
+        if (dv === fmt(today) && tv < getNowHHMM()) {
+            setInvalid('time'); showErr('time', "Can't pick a time that has already passed today."); return false;
+        }
+        setValid('time'); hideErr('time'); return true;
+    }
+    timeInput.addEventListener('change', validateTime);
+    // Re-run time check if user changes the date after setting a time
+    dateInput.addEventListener('change', function () {
+        if (timeInput.value) validateTime();
+    });
+
+    // ── SUBMIT GUARD ──────────────────────────────────────
+    document.getElementById('res-form').addEventListener('submit', function (e) {
+        let ok = true;
+
+        if (nameInput.value.trim().length < 2) {
+            setInvalid('name'); showErr('name', 'Please enter your full name.'); ok = false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+            setInvalid('email'); showErr('email', 'Please enter a valid email address.'); ok = false;
+        }
+        const digs = phoneInput.value.replace(/\D/g, '');
+        if (digs.length < 8 || digs.length > 15) {
+            setInvalid('phone'); showErr('phone', 'Digits only · 8–15 numbers required.'); ok = false;
+        }
+        if (!dateInput.value || dateInput.value < fmt(today) || dateInput.value > fmt(maxDate)) {
+            setInvalid('date'); showErr('date', 'Please pick a date between today and 2 years ahead.'); ok = false;
+        }
+        if (!validateTime()) ok = false;   // covers both empty and past-time
+
+        if (!ok) {
+            e.preventDefault();
+            const first = document.querySelector('.is-invalid');
+            if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+
+})();
+</script>
 </body>
 </html>

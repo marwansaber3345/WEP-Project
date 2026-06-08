@@ -2,88 +2,159 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - Reservations</title>
+    <title>Admin — Reservations | La Cascada</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #3e3e3e;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #1a1a1a;
             padding: 30px;
+            color: #ddd;
         }
 
-        h1 {
-            color: #c79f00;
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
         }
+
+        h1 { color: #c79f00; font-size: 28px; }
+
+        .admin-nav {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-nav a {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+        .btn-gold {
+            background: #c8933f;
+            color: white;
+        }
+        .btn-gold:hover { background: #a5732e; }
+
+        .btn-outline-gold {
+            border: 1.5px solid #c8933f;
+            color: #c8933f;
+        }
+        .btn-outline-gold:hover { background: #c8933f; color: white; }
+
+        .btn-dark {
+            background: #2e2e2e;
+            color: #aaa;
+            border: 1px solid #444;
+        }
+        .btn-dark:hover { background: #3e3e3e; color: #ddd; }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            box-shadow: 0 2px 8px rgb(198, 168, 0);
+            background: #242424;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(198,168,0,0.1);
         }
 
         th {
-            background: #222;
-            color: white;
-            padding: 12px;
+            background: #111;
+            color: #c8933f;
+            padding: 14px 16px;
             text-align: left;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         td {
-            padding:  16px;
-            border-bottom: 1px solid rgb(198, 168, 0);
+            padding: 14px 16px;
+            border-bottom: 1px solid #333;
+            font-size: 14px;
+            color: #ccc;
         }
 
-        tr:hover {
-            background: rgb(198, 168, 0);
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(200,147,63,0.08); }
+
+        .badge-id {
+            background: #333;
+            color: #c8933f;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
         }
 
         .no-data {
             text-align: center;
-            color: #999;
-            padding: 20px;
+            color: #666;
+            padding: 40px;
+            font-size: 16px;
+        }
+
+        .count-tag {
+            font-size: 13px;
+            color: #888;
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
 
-    <h1>All Reservations</h1>
+<div class="admin-header">
+    <div>
+        <h1>📋 Reservations</h1>
+        <p class="count-tag">{{ reservations | length }} total reservation{{ 's' if reservations | length != 1 else '' }}</p>
+    </div>
+    <nav class="admin-nav">
+        <a href="{{ url_for('admin_menu_page') }}" class="admin-nav a btn-gold">🍽️ Edit Menu</a>
+        <a href="{{ url_for('home') }}"            class="admin-nav a btn-dark">← Back to Site</a>
+    </nav>
+</div>
 
-    {% if reservations %}
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Message</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for res in reservations %}
-            <tr>
-                <td>{{ res.id }}</td>
-                <td>{{ res.name }}</td>
-                <td>{{ res.email }}</td>
-                <td>{{ res.phone }}</td>
-                <td>{{ res.date }}</td>
-                <td>{{ res.time }}</td>
-                <td>{{ res.message or '—' }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-        <p class="no-data">No reservations yet.</p>
-    {% endif %}
-
+{% if reservations %}
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for res in reservations %}
+        <tr>
+            <td><span class="badge-id">{{ res.id }}</span></td>
+            <td><strong style="color:#eee;">{{ res.name }}</strong></td>
+            <td>{{ res.email }}</td>
+            <td>{{ res.phone }}</td>
+            <td>{{ res.date }}</td>
+            <td>{{ res.time }}</td>
+            <td style="color:#aaa;">{{ res.message or '—' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="no-data">No reservations yet.</p>
+{% endif %}
 
 <script>
-    alert("Welcome to the admin panel! Here you can view all reservations");
+    // Removed the blocking alert — admins can see the panel directly now.
 </script>
-
 
 </body>
 </html>

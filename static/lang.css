@@ -1,0 +1,57 @@
+/* ═══════════════════════════════════════════════════════
+   lang.css — Language toggle + shared RTL/LTR overrides
+   Uses the Champagne & Charcoal palette variables.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Toggle Button ───────────────────────────────────────── */
+.lang-btn {
+    background    : transparent;
+    border        : 1.5px solid rgba(200,168,75,0.55);
+    color         : #c8a84b;
+    padding       : 5px 17px;
+    cursor        : pointer;
+    font-family   : 'Cairo','Segoe UI',sans-serif;
+    font-size     : 13px;
+    font-weight   : 700;
+    letter-spacing: 0.3px;
+    transition    : all 0.3s ease;
+    white-space   : nowrap;
+    flex-shrink   : 0;
+    line-height   : 1.7;
+}
+.lang-btn:hover,
+.lang-btn:focus {
+    background : #c8a84b;
+    color      : #0d0b09;
+    border-color: #c8a84b;
+    outline    : none;
+}
+
+/* nav row: keep list + button on one line */
+header nav { display:flex; align-items:center; gap:20px; }
+
+/* ── RTL: sub-title decorative lines ─────────────────────── */
+html[dir="rtl"] .sub-title::before { background:linear-gradient(to left, transparent,#c8a84b); }
+html[dir="rtl"] .sub-title::after  { background:linear-gradient(to right,transparent,#c8a84b); }
+
+/* ── RTL: home content-area ──────────────────────────────── */
+html[dir="rtl"] .content-area    { justify-content:flex-start; }
+html[dir="ltr"] .content-overlay { direction:ltr; }
+
+/* ── RTL: forms ──────────────────────────────────────────── */
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select  { text-align:right; direction:rtl; }
+
+/* ── RTL: reservation info card ──────────────────────────── */
+html[dir="rtl"] .info-item     { flex-direction:row-reverse; }
+html[dir="rtl"] .info-item > div { text-align:right; }
+
+/* ── RTL: nav list ───────────────────────────────────────── */
+html[dir="rtl"] nav ul { flex-direction:row-reverse; }
+
+/* ── RTL: about content grid ─────────────────────────────── */
+html[dir="rtl"] .content-grid { direction:rtl; }
+
+/* ── RTL: talabat section ────────────────────────────────── */
+html[dir="rtl"] .talabat-inner { direction:rtl; }

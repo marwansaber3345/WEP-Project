@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | La Cascada</title>
-    <link rel="stylesheet" href="static\about.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lang.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-
 <header>
     <div class="logo">
         <div class="logo-text">
@@ -16,21 +16,21 @@
             <span class="sub-title">Restaurant</span>
         </div>
     </div>
-<nav>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('menu') }}">Menu</a></li>
-        <li><a href="{{ url_for('reservation_page') }}">Reservation</a></li>
-        <li><a href="{{ url_for('about') }}">About</a></li>
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}"             data-i18n="nav.home">Home</a></li>
+            <li><a href="{{ url_for('menu') }}"             data-i18n="nav.menu">Menu</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" data-i18n="nav.reservation">Reservation</a></li>
+            <li><a href="{{ url_for('about') }}"            data-i18n="nav.about">About</a></li>
+        </ul>
+        <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">العربية</button>
+    </nav>
 </header>
-
 <main>
     <section class="about-hero">
         <div class="hero-content">
-            <h1>Our Story</h1>
-            <p>A journey of flavor and elegance in the heart of Hurghada</p>
+            <h1 data-i18n="about.title">Our Story</h1>
+            <p  data-i18n="about.subtitle">A journey of flavor and elegance in the heart of Hurghada</p>
         </div>
     </section>
 
@@ -38,12 +38,12 @@
         <div class="container">
             <div class="content-grid">
                 <div class="text-block">
-                    <h2 class="gold-title">The Essence of La Cascada</h2>
-                    <p>Located in the vibrant city of Hurghada, La Cascada Restaurant is more than just a dining destination; it is a celebration of culinary artistry and refined hospitality. Our mission has always been to provide a "fine taste of elegance" to every guest who walks through our doors.</p>
-                    <p>From our humble beginnings as a local favorite to becoming a cornerstone of the Red Sea dining scene, we have stayed true to our roots: using only the freshest, high-quality ingredients to create dishes that resonate with both local tradition and international sophistication.</p>
+                    <h2 class="gold-title" data-i18n="about.essence.h">The Essence of La Cascada</h2>
+                    <p data-i18n="about.p1">Located in the vibrant city of Hurghada, La Cascada Restaurant is more than just a dining destination; it is a celebration of culinary artistry and refined hospitality.</p>
+                    <p data-i18n="about.p2">From our humble beginnings as a local favourite to becoming a cornerstone of the Red Sea dining scene, we have stayed true to our roots: using only the freshest, high-quality ingredients.</p>
                 </div>
                 <div class="image-block">
-                    <img src="images/about.png" alt="Restaurant Interior">
+                    <img src="{{ url_for('static', filename='images/about.png') }}" alt="Restaurant Interior">
                 </div>
             </div>
         </div>
@@ -51,32 +51,32 @@
 
     <section class="specialties-section">
         <div class="container">
-            <h2 class="center-title">What Defines Us</h2>
+            <h2 class="center-title" data-i18n="about.defines.h">What Defines Us</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <h3>Gourmet Bakery</h3>
-                    <p>Known for our exquisite pastries and freshly baked breads, our bakery side brings the comforting aroma of a classic patisserie to the shores of Egypt.</p>
+                    <h3 data-i18n="about.bakery.h">Gourmet Bakery</h3>
+                    <p  data-i18n="about.bakery.p">Known for our exquisite pastries and freshly baked breads, our bakery brings the comforting aroma of a classic patisserie to the shores of Egypt.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>International Cuisine</h3>
-                    <p>Whether it's our signature Italian pastas, stone-baked pizzas, or premium beef fillets, our menu is designed to satisfy the most diverse palates.</p>
+                    <h3 data-i18n="about.cuisine.h">International Cuisine</h3>
+                    <p  data-i18n="about.cuisine.p">Whether it's our signature Italian pastas, stone-baked pizzas, or premium beef fillets, our menu is designed to satisfy the most diverse palates.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Perfect Atmosphere</h3>
-                    <p>Designed with a blend of modern luxury and warm comfort, La Cascada offers the ideal setting for romantic dinners, family gatherings, or business meetings.</p>
+                    <h3 data-i18n="about.atm.h">Perfect Atmosphere</h3>
+                    <p  data-i18n="about.atm.p">Designed with a blend of modern luxury and warm comfort, La Cascada offers the ideal setting for romantic dinners, family gatherings, or business meetings.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="cta-section">
-        <h2>Experience Excellence Firsthand</h2>
+        <h2 data-i18n="about.cta.h">Experience Excellence Firsthand</h2>
         <div class="button-group">
-            <a href="menu.html" class="btn">View Our Menu</a>
-            <a href="reservation.html" class="btn btn-outline">Book a Table</a>
+            <a href="{{ url_for('menu') }}"             class="btn"          data-i18n="about.cta.menu">View Our Menu</a>
+            <a href="{{ url_for('reservation_page') }}" class="btn btn-outline" data-i18n="about.cta.reserve">Book a Table</a>
         </div>
     </section>
 </main>
-
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
 </body>
 </html>
