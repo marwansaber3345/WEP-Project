@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from functools import wraps
 import requests
+import os
+import uuid
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'la-cascada-admin-2024'
@@ -268,27 +272,91 @@ def handle_reserve():
     return redirect(url_for("reservation_page"))
 
 
+# ── Admin Auth ────────────────────────────────────────────────────────────────
+
+ADMIN_USERNAME = 'lacascada'
+ADMIN_PASSWORD = 'Cascade@2024'
+
+ALLOWED_EXT = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
+
+def save_upload(file):
+    """Save an uploaded image to static/images/ and return the relative path, or None."""
+    if not file or not file.filename:
+        return None
+    ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else ''
+    if ext not in ALLOWED_EXT:
+        return None
+    fname = secure_filename(file.filename)
+    # secure_filename strips non-ASCII (e.g. Arabic names) — fall back to UUID
+    if not fname or fname in ('.', f'.{ext}'):
+        fname = f"{uuid.uuid4().hex[:10]}.{ext}"
+    dest = os.path.join(app.static_folder, 'images', fname)
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    file.save(dest)
+    return 'images/' + fname
+
+def get_image_path(req):
+    """Return the final image path: uploaded file takes priority over typed path."""
+    path = save_upload(req.files.get('image_file'))
+    if path:
+        return path
+    # Normalize backslashes that Windows users might type
+    return req.form.get('image', '').strip().replace('\\', '/')
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('admin_logged_in'):
+            return redirect(url_for('admin_login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if session.get('admin_logged_in'):
+        return redirect(url_for('view_reservations'))
+    error = False
+    if request.method == 'POST':
+        u = request.form.get('username', '')
+        p = request.form.get('password', '')
+        if u == ADMIN_USERNAME and p == ADMIN_PASSWORD:
+            session['admin_logged_in'] = True
+            next_url = request.args.get('next') or url_for('view_reservations')
+            return redirect(next_url)
+        error = True
+    return render_template('AdminLogin.html', error=error)
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_logged_in', None)
+    return redirect(url_for('admin_login'))
+
+
 # ── Admin Routes ──────────────────────────────────────────────────────────────
 
 @app.route("/admin/reservations")
+@admin_required
 def view_reservations():
     return render_template("AdminRes.html",
         reservations=Reservation.query.order_by(Reservation.timestamp.asc()).all())
 
 @app.route("/admin/menu")
+@admin_required
 def admin_menu_page():
     return render_template("AdminMenu.html",
         items=MenuItem.query.order_by(MenuItem.section, MenuItem.category, MenuItem.sort_order).all(),
         sections=SECTIONS, categories=CATEGORIES)
 
 @app.route("/admin/menu/add", methods=["POST"])
+@admin_required
 def admin_menu_add():
     try:
         db.session.add(MenuItem(
             section=request.form.get("section"), category=request.form.get("category"),
             name_en=request.form.get("name_en","").strip(), name_ar=request.form.get("name_ar","").strip(),
             desc_en=request.form.get("desc_en","").strip(), desc_ar=request.form.get("desc_ar","").strip(),
-            price=float(request.form.get("price") or 0), image=request.form.get("image","").strip(),
+            price=float(request.form.get("price") or 0),
+            image=get_image_path(request),
             is_active=(request.form.get("is_active")=="on"), sort_order=int(request.form.get("sort_order") or 0),
         )); db.session.commit(); flash("✅  Item added!", "success")
     except Exception as e:
@@ -296,13 +364,15 @@ def admin_menu_add():
     return redirect(url_for("admin_menu_page"))
 
 @app.route("/admin/menu/edit/<int:item_id>", methods=["POST"])
+@admin_required
 def admin_menu_edit(item_id):
     item = MenuItem.query.get_or_404(item_id)
     try:
         item.section=request.form.get("section"); item.category=request.form.get("category")
         item.name_en=request.form.get("name_en","").strip(); item.name_ar=request.form.get("name_ar","").strip()
         item.desc_en=request.form.get("desc_en","").strip(); item.desc_ar=request.form.get("desc_ar","").strip()
-        item.price=float(request.form.get("price") or 0); item.image=request.form.get("image","").strip()
+        item.price=float(request.form.get("price") or 0)
+        item.image=get_image_path(request)
         item.is_active=(request.form.get("is_active")=="on"); item.sort_order=int(request.form.get("sort_order") or 0)
         db.session.commit(); flash("✅  Updated!", "success")
     except Exception as e:
@@ -310,6 +380,7 @@ def admin_menu_edit(item_id):
     return redirect(url_for("admin_menu_page"))
 
 @app.route("/admin/menu/delete/<int:item_id>", methods=["POST"])
+@admin_required
 def admin_menu_delete(item_id):
     item = MenuItem.query.get_or_404(item_id)
     try:

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | La Cascada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            background: #0d0b09;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Subtle gold-dot background */
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            background-image: radial-gradient(rgba(200,168,75,0.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+
+        .login-card {
+            position: relative;
+            background: #181410;
+            border: 1px solid rgba(200,168,75,0.2);
+            padding: 50px 44px 44px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Top gold accent line */
+        .login-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #c8a84b, transparent);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .brand-name {
+            font-family: 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #c8a84b;
+            letter-spacing: 1px;
+            display: block;
+        }
+        .brand-sub {
+            font-size: 11px;
+            color: #c8a84b;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .brand-sub::before,
+        .brand-sub::after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #c8a84b);
+        }
+        .brand-sub::after {
+            background: linear-gradient(to left, transparent, #c8a84b);
+        }
+
+        h2 {
+            color: #ede3d0;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 28px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #b0a08a;
+            margin-bottom: 8px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            background: #0d0b09;
+            border: 1px solid #2e2418;
+            padding: 13px 15px;
+            color: #ede3d0;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+        input:focus {
+            border-color: #c8a84b;
+            box-shadow: 0 0 0 3px rgba(200,168,75,0.1);
+        }
+        input::placeholder { color: #7a6a56; }
+
+        .error-msg {
+            background: rgba(192,57,43,0.12);
+            border: 1px solid rgba(192,57,43,0.4);
+            color: #e07070;
+            padding: 11px 16px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1.5px solid #c8a84b;
+            color: #c8a84b;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 6px;
+        }
+        .btn-login:hover {
+            background: #c8a84b;
+            color: #0d0b09;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #7a6a56;
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #c8a84b; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="brand">
+            <span class="brand-name">La Cascada</span>
+            <span class="brand-sub">Restaurant</span>
+        </div>
+
+        <h2>Admin Panel</h2>
+
+        {% if error %}
+        <div class="error-msg">⚠️ Incorrect username or password.</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('admin_login') }}">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"
+                       placeholder="Enter username" autocomplete="username" autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       placeholder="Enter password" autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn-login">Sign In →</button>
+        </form>
+
+        <a href="{{ url_for('home') }}" class="back-link">← Back to website</a>
+    </div>
+</body>
+</html>
