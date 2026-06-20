@@ -6,8 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='lang.css') }}">
+    <!-- Three.js for gold-ember particle hero -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for cinematic text animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
+
+<!-- ══ LOADING SCREEN ══════════════════════════════════════ -->
+<div id="lc-loading" aria-hidden="true">
+    <span class="lc-loading-title">La Cascada</span>
+    <div class="lc-loading-bar"></div>
+    <span class="lc-loading-sub">Restaurant · Hurghada</span>
+</div>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
 <header>
     <div class="logo">
         <div class="logo-text">
@@ -25,36 +38,176 @@
         <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">العربية</button>
     </nav>
 </header>
+
 <main>
+
+    <!-- ══ HERO ════════════════════════════════════════════ -->
     <div class="home-background">
+        <canvas id="lc-particles"></canvas>
         <video autoplay muted loop playsinline class="bg-video">
             <source src="{{ url_for('static', filename='misc/background-cooking.mp4') }}" type="video/mp4">
         </video>
         <div class="hero-text">
-            <div class="logo-text hero-logo">
-                <span class="main-title">La Cascada</span>
-                <span class="sub-title">Restaurant</span>
+            <div class="logo-text hero-logo" id="hero-logo">
+                <span class="main-title" id="hero-name">La Cascada</span>
+                <span class="sub-title" id="hero-sub">Restaurant</span>
             </div>
-            <p data-i18n="home.hero">A fine taste of elegance</p>
+            <p class="hero-tagline" id="hero-tag" data-i18n="home.hero">A fine taste of elegance</p>
+        </div>
+        <div class="scroll-hint" id="scroll-hint">
+            <div class="scroll-mouse"></div>
+            <span>Scroll</span>
         </div>
     </div>
 
-    <section class="content-area">
-        <div class="content-overlay">
-            <h1 class="top-tag"       data-i18n="home.tag">Give It a Try</h1>
-            <p  class="main-headline" data-i18n="home.headline">You've Made Questionable Decisions Before</p>
-            <div class="button-container">
-                <a href="{{ url_for('reservation_page') }}"><button data-i18n="home.btn.reserve">Reserve a Table</button></a>
-                <a href="{{ url_for('menu') }}"><button data-i18n="home.btn.menu">View Menu</button></a>
+    <!-- ══ MARQUEE STRIP ═══════════════════════════════════ -->
+    <section class="marquee-section" aria-hidden="true">
+        <div class="marquee-outer">
+            <div class="marquee-track">
+                <span data-en="MAIN DISHES" data-ar="الأطباق الرئيسية">MAIN DISHES</span><span class="m-sep">◆</span>
+                <span data-en="SOUP" data-ar="الحساء">SOUP</span><span class="m-sep">◆</span>
+                <span data-en="RAMADAN DRINKS" data-ar="مشروبات رمضانية">RAMADAN DRINKS</span><span class="m-sep">◆</span>
+                <span data-en="FOUL" data-ar="الفول">FOUL</span><span class="m-sep">◆</span>
+                <span data-en="EGGS" data-ar="البيض">EGGS</span><span class="m-sep">◆</span>
+                <span data-en="YOGURT" data-ar="الزبادي">YOGURT</span><span class="m-sep">◆</span>
+                <span data-en="IFTAR MENU" data-ar="قائمة الإفطار">IFTAR MENU</span><span class="m-sep">◆</span>
+                <span data-en="SUHOOR MENU" data-ar="قائمة السحور">SUHOOR MENU</span><span class="m-sep">◆</span>
+                <!-- duplicate for seamless loop -->
+                <span data-en="MAIN DISHES" data-ar="الأطباق الرئيسية">MAIN DISHES</span><span class="m-sep">◆</span>
+                <span data-en="SOUP" data-ar="الحساء">SOUP</span><span class="m-sep">◆</span>
+                <span data-en="RAMADAN DRINKS" data-ar="مشروبات رمضانية">RAMADAN DRINKS</span><span class="m-sep">◆</span>
+                <span data-en="FOUL" data-ar="الفول">FOUL</span><span class="m-sep">◆</span>
+                <span data-en="EGGS" data-ar="البيض">EGGS</span><span class="m-sep">◆</span>
+                <span data-en="YOGURT" data-ar="الزبادي">YOGURT</span><span class="m-sep">◆</span>
+                <span data-en="IFTAR MENU" data-ar="قائمة الإفطار">IFTAR MENU</span><span class="m-sep">◆</span>
+                <span data-en="SUHOOR MENU" data-ar="قائمة السحور">SUHOOR MENU</span><span class="m-sep">◆</span>
             </div>
         </div>
     </section>
+
+    <!-- ══ CONTENT ═════════════════════════════════════════ -->
+    <section class="content-area">
+        <div class="content-overlay">
+            <span class="top-tag lc-hidden" data-delay="0"    data-i18n="home.tag">Give It a Try</span>
+            <p    class="main-headline lc-hidden" data-delay="100" data-i18n="home.headline">You've Made Questionable Decisions Before</p>
+            <div class="button-container lc-hidden" data-delay="200">
+                <div class="magnetic">
+                    <a href="{{ url_for('reservation_page') }}">
+                        <button class="ripple" data-i18n="home.btn.reserve">Reserve a Table</button>
+                    </a>
+                </div>
+                <div class="magnetic">
+                    <a href="{{ url_for('menu') }}">
+                        <button data-i18n="home.btn.menu">View Menu</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </main>
-<script>
-    window.addEventListener('scroll', () => {
-        document.body.classList.toggle('scrolled', window.scrollY > 100);
-    });
-</script>
+
+<!-- Shared animations -->
+<script src="{{ url_for('static', filename='animations.js') }}"></script>
 <script src="{{ url_for('static', filename='lang.js') }}"></script>
+
+<script>
+/* ── Scroll header reveal ─────────────────────────────────── */
+window.addEventListener('scroll', () => {
+    document.body.classList.toggle('scrolled', window.scrollY > 100);
+});
+
+/* ── Three.js Gold Ember Particle System ─────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof THREE === 'undefined') return;
+    const container = document.querySelector('.home-background');
+    const canvas    = document.getElementById('lc-particles');
+    if (!container || !canvas) return;
+
+    const W = container.offsetWidth, H = container.offsetHeight;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(W, H); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+
+    const scene  = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+    camera.position.z = 22;
+
+    /* Star field */
+    (function(){
+        const N=160, geo=new THREE.BufferGeometry(), pos=new Float32Array(N*3);
+        for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*90;pos[i*3+1]=(Math.random()-.5)*55;pos[i*3+2]=-22-Math.random()*8;}
+        geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+        scene.add(new THREE.Points(geo,new THREE.PointsMaterial({color:0xe0d4a8,size:.055,transparent:true,opacity:.35,depthWrite:false})));
+    })();
+
+    /* Main embers */
+    const EC=300, eGeo=new THREE.BufferGeometry(), ePos=new Float32Array(EC*3), eD=[];
+    for(let i=0;i<EC;i++){
+        ePos[i*3]=(Math.random()-.5)*68; ePos[i*3+1]=(Math.random()-.5)*44; ePos[i*3+2]=(Math.random()-.5)*14;
+        eD.push({vy:.009+Math.random()*.027,phi:Math.random()*Math.PI*2,dA:.004+Math.random()*.009,dS:.007+Math.random()*.016});
+    }
+    eGeo.setAttribute('position',new THREE.BufferAttribute(ePos,3));
+    const eMat=new THREE.PointsMaterial({color:0xc8a84b,size:.17,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false});
+    scene.add(new THREE.Points(eGeo,eMat));
+
+    /* Glow halos */
+    const GC=65, gGeo=new THREE.BufferGeometry(), gPos=new Float32Array(GC*3), gD=[];
+    for(let i=0;i<GC;i++){
+        gPos[i*3]=(Math.random()-.5)*68; gPos[i*3+1]=(Math.random()-.5)*44; gPos[i*3+2]=(Math.random()-.5)*8-4;
+        gD.push({vy:.003+Math.random()*.007,phi:Math.random()*Math.PI*2,dS:.004+Math.random()*.006});
+    }
+    gGeo.setAttribute('position',new THREE.BufferAttribute(gPos,3));
+    scene.add(new THREE.Points(gGeo,new THREE.PointsMaterial({color:0xdba830,size:.65,transparent:true,opacity:.22,blending:THREE.AdditiveBlending,depthWrite:false})));
+
+    /* Bright sparks */
+    const SC=45, sGeo=new THREE.BufferGeometry(), sPos=new Float32Array(SC*3), sD=[];
+    for(let i=0;i<SC;i++){
+        sPos[i*3]=(Math.random()-.5)*52; sPos[i*3+1]=(Math.random()-.5)*44; sPos[i*3+2]=(Math.random()-.5)*6;
+        sD.push({vy:.022+Math.random()*.036});
+    }
+    sGeo.setAttribute('position',new THREE.BufferAttribute(sPos,3));
+    scene.add(new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xfff4cc,size:.09,transparent:true,opacity:.95,blending:THREE.AdditiveBlending,depthWrite:false})));
+
+    let t=0;
+    (function tick(){
+        requestAnimationFrame(tick); t+=.016;
+        for(let i=0;i<EC;i++){const d=eD[i];d.phi+=d.dS;ePos[i*3]+=Math.sin(d.phi)*d.dA;ePos[i*3+1]+=d.vy;if(ePos[i*3+1]>23){ePos[i*3+1]=-23;ePos[i*3]=(Math.random()-.5)*68;}}
+        eGeo.attributes.position.needsUpdate=true;
+        for(let i=0;i<GC;i++){const d=gD[i];d.phi+=d.dS;gPos[i*3]+=Math.sin(d.phi)*.008;gPos[i*3+1]+=d.vy;if(gPos[i*3+1]>23){gPos[i*3+1]=-23;gPos[i*3]=(Math.random()-.5)*68;}}
+        gGeo.attributes.position.needsUpdate=true;
+        for(let i=0;i<SC;i++){sPos[i*3+1]+=sD[i].vy;if(sPos[i*3+1]>23){sPos[i*3+1]=-23;sPos[i*3]=(Math.random()-.5)*52;}}
+        sGeo.attributes.position.needsUpdate=true;
+        camera.position.y=Math.sin(t*.25)*.22; camera.position.x=Math.cos(t*.18)*.12;
+        renderer.render(scene,camera);
+    })();
+
+    window.addEventListener('resize',()=>{
+        const nW=container.offsetWidth, nH=container.offsetHeight;
+        camera.aspect=nW/nH; camera.updateProjectionMatrix(); renderer.setSize(nW,nH);
+    });
+});
+
+/* ── GSAP Hero Reveal (fires after loading screen exits) ─── */
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap === 'undefined') return;
+    // Loading screen is CSS-animated (exits at 2.2s) — GSAP fires after
+    setTimeout(function () {
+        gsap.fromTo('#hero-name',
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' });
+        gsap.fromTo('#hero-sub',
+            { opacity: 0 },
+            { opacity: 1, duration: 0.8, delay: 0.5, ease: 'power2.out' });
+        gsap.fromTo('#hero-tag',
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.8, delay: 0.8, ease: 'power2.out' });
+        gsap.fromTo('#scroll-hint',
+            { opacity: 0 },
+            { opacity: 1, duration: 0.6, delay: 1.2, ease: 'power2.out' });
+    }, 2300);
+});
+</script>
+
 </body>
 </html>

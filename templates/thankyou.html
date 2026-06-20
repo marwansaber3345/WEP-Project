@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Confirmed | La Cascada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='thankyou.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Gold ember particles — same system as home hero -->
+    <canvas id="lc-particles" aria-hidden="true"></canvas>
+
+    <div class="ty-card" role="main">
+
+        <!-- Animated checkmark -->
+        <div class="ty-check-wrap" aria-hidden="true">
+            <div class="ty-check-ring"></div>
+            <div class="ty-check-icon">✦</div>
+        </div>
+
+        <!-- Label + heading -->
+        <p class="ty-label" data-en="Reservation Confirmed" data-ar="تم تأكيد الحجز">Reservation Confirmed</p>
+
+        <h1 class="ty-heading" data-en="We'll be expecting you" data-ar="سنكون بانتظارك">We'll be expecting you</h1>
+
+        {% if name %}
+        <p class="ty-name" data-en="{{ name }}" data-ar="{{ name }}">{{ name }}</p>
+        {% endif %}
+
+        <!-- Ornament -->
+        <div class="ty-ornament"><span>◆</span></div>
+
+        <!-- Booking details -->
+        {% if date or time %}
+        <div class="ty-details">
+            {% if name %}
+            <div class="ty-detail-row">
+                <span class="ty-detail-label" data-en="Guest" data-ar="الضيف">Guest</span>
+                <span class="ty-detail-value" data-en="{{ name }}" data-ar="{{ name }}">{{ name }}</span>
+            </div>
+            {% endif %}
+            {% if date %}
+            <div class="ty-detail-row">
+                <span class="ty-detail-label" data-en="Date" data-ar="التاريخ">Date</span>
+                <span class="ty-detail-value" data-en="{{ date }}" data-ar="{{ date }}">{{ date }}</span>
+            </div>
+            {% endif %}
+            {% if time %}
+            <div class="ty-detail-row">
+                <span class="ty-detail-label" data-en="Time" data-ar="الوقت">Time</span>
+                <span class="ty-detail-value" data-en="{{ time }}" data-ar="{{ time }}">{{ time }}</span>
+            </div>
+            {% endif %}
+            <p class="ty-note" data-en="Our team will be in touch to confirm your booking."
+                data-ar="سيتواصل معك فريقنا لتأكيد حجزك.">
+                Our team will be in touch to confirm your booking.
+            </p>
+        </div>
+        {% else %}
+        <div class="ty-details">
+            <p class="ty-note" data-en="Your reservation has been received. Our team will be in touch shortly."
+                data-ar="تم استلام حجزك. سيتواصل معك فريقنا قريباً.">
+                Your reservation has been received. Our team will be in touch shortly.
+            </p>
+        </div>
+        {% endif %}
+
+        <!-- CTA Buttons -->
+        <div class="ty-buttons">
+            <div class="magnetic">
+                <a href="{{ url_for('home') }}" class="ty-btn ty-btn-primary" data-en="Back to Home"
+                    data-ar="العودة للرئيسية">Back to Home</a>
+            </div>
+            <div class="magnetic">
+                <a href="{{ url_for('menu') }}" class="ty-btn ty-btn-secondary" data-en="View Menu"
+                    data-ar="عرض القائمة">View Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer brand note -->
+    <p class="ty-footer" data-en="La Cascada Restaurant · Hurghada, Egypt" data-ar="مطعم لا كاسكادا · الغردقة، مصر">
+        La Cascada Restaurant · Hurghada, Egypt
+    </p>
+
+    <script src="{{ url_for('static', filename='animations.js') }}"></script>
+
+    <!-- lang.js omitted intentionally — this page uses data-en/ar directly below -->
+    <script>
+        /* ── Minimal lang support on thank-you page ─────────────── */
+        (function () {
+            const lang = localStorage.getItem('lc_lang') || 'en';
+            if (lang === 'ar') {
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+            }
+            document.querySelectorAll('[data-en]').forEach(el => {
+                const val = el.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en');
+                if (val) el.textContent = val;
+            });
+        })();
+    </script>
+
+    <!-- ── Three.js Gold Embers ───────────────────────────────── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof THREE === 'undefined') return;
+            const canvas = document.getElementById('lc-particles');
+            if (!canvas) return;
+
+            const W = window.innerWidth, H = window.innerHeight;
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setSize(W, H);
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+            camera.position.z = 22;
+
+            // Star field
+            (function () {
+                const N = 160, geo = new THREE.BufferGeometry(), pos = new Float32Array(N * 3);
+                for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 90; pos[i * 3 + 1] = (Math.random() - .5) * 55; pos[i * 3 + 2] = -22 - Math.random() * 8; }
+                geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+                scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xe0d4a8, size: .055, transparent: true, opacity: .32, depthWrite: false })));
+            })();
+
+            // Main embers
+            const EC = 220, eGeo = new THREE.BufferGeometry(), ePos = new Float32Array(EC * 3), eD = [];
+            for (let i = 0; i < EC; i++) {
+                ePos[i * 3] = (Math.random() - .5) * 68; ePos[i * 3 + 1] = (Math.random() - .5) * 44; ePos[i * 3 + 2] = (Math.random() - .5) * 14;
+                eD.push({ vy: .009 + Math.random() * .025, phi: Math.random() * Math.PI * 2, dA: .004 + Math.random() * .009, dS: .007 + Math.random() * .016 });
+            }
+            eGeo.setAttribute('position', new THREE.BufferAttribute(ePos, 3));
+            scene.add(new THREE.Points(eGeo, new THREE.PointsMaterial({ color: 0xc8a84b, size: .16, transparent: true, opacity: .85, blending: THREE.AdditiveBlending, depthWrite: false })));
+
+            // Glow halos
+            const GC = 45, gGeo = new THREE.BufferGeometry(), gPos = new Float32Array(GC * 3), gD = [];
+            for (let i = 0; i < GC; i++) {
+                gPos[i * 3] = (Math.random() - .5) * 68; gPos[i * 3 + 1] = (Math.random() - .5) * 44; gPos[i * 3 + 2] = (Math.random() - .5) * 8 - 4;
+                gD.push({ vy: .003 + Math.random() * .006, phi: Math.random() * Math.PI * 2, dS: .004 });
+            }
+            gGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
+            scene.add(new THREE.Points(gGeo, new THREE.PointsMaterial({ color: 0xdba830, size: .6, transparent: true, opacity: .18, blending: THREE.AdditiveBlending, depthWrite: false })));
+
+            let t = 0;
+            (function tick() {
+                requestAnimationFrame(tick); t += .016;
+                for (let i = 0; i < EC; i++) { const d = eD[i]; d.phi += d.dS; ePos[i * 3] += Math.sin(d.phi) * d.dA; ePos[i * 3 + 1] += d.vy; if (ePos[i * 3 + 1] > 23) { ePos[i * 3 + 1] = -23; ePos[i * 3] = (Math.random() - .5) * 68; } }
+                eGeo.attributes.position.needsUpdate = true;
+                for (let i = 0; i < GC; i++) { const d = gD[i]; d.phi += d.dS; gPos[i * 3] += Math.sin(d.phi) * .008; gPos[i * 3 + 1] += d.vy; if (gPos[i * 3 + 1] > 23) { gPos[i * 3 + 1] = -23; gPos[i * 3] = (Math.random() - .5) * 68; } }
+                gGeo.attributes.position.needsUpdate = true;
+                camera.position.y = Math.sin(t * .25) * .2; camera.position.x = Math.cos(t * .18) * .1;
+                renderer.render(scene, camera);
+            })();
+
+            window.addEventListener('resize', () => {
+                const nW = window.innerWidth, nH = window.innerHeight;
+                camera.aspect = nW / nH; camera.updateProjectionMatrix();
+                renderer.setSize(nW, nH);
+            });
+        });
+    </script>
+
+    <!-- ── GSAP magnetic init (animations.js handles cursor/magnetic) ─ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof gsap === 'undefined') return;
+            // Extra: subtle card float animation after reveal
+            setTimeout(function () {
+                gsap.to('.ty-card', {
+                    y: -6, duration: 3, ease: 'sine.inOut',
+                    yoyo: true, repeat: -1
+                });
+            }, 2500);
+        });
+    </script>
+
+</body>
+
+</html>

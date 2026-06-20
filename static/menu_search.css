@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════════════════════════
+   menu_search.css — La Cascada
+   Append to menu.css  OR  add as extra <link> in menu.html
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Search Wrapper ──────────────────────────────────────── */
+.menu-search-wrap {
+    position: relative;
+    max-width: 480px;
+    margin: 36px auto 0;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px; top: 50%;
+    transform: translateY(-50%);
+    width: 16px; height: 16px;
+    color: rgba(200,168,75,.45);
+    pointer-events: none;
+    transition: color .3s;
+}
+.menu-search-wrap:focus-within .search-icon { color: #c8a84b; }
+
+/* ── Input ───────────────────────────────────────────────── */
+.menu-search-input {
+    width: 100%;
+    background: rgba(200,168,75,.05);
+    border: 1px solid rgba(200,168,75,.22);
+    border-bottom: 1px solid rgba(200,168,75,.35);
+    padding: 14px 44px 14px 44px;
+    color: #f8f0e4;
+    font-family: 'Cairo','Segoe UI',sans-serif;
+    font-size: 14px; letter-spacing: .3px;
+    outline: none; border-radius: 0;
+    -webkit-appearance: none;
+    transition: border-color .3s, background .3s, box-shadow .3s;
+    /* kill native × button */
+}
+.menu-search-input::-webkit-search-cancel-button { display: none; }
+.menu-search-input::placeholder { color: rgba(192,176,160,.55); }
+
+.menu-search-input:focus {
+    border-color: rgba(200,168,75,.5);
+    border-bottom-color: #c8a84b;
+    background: rgba(200,168,75,.07);
+    box-shadow: 0 0 0 1px rgba(200,168,75,.08) inset;
+}
+
+/* ── Clear × Button ──────────────────────────────────────── */
+.search-clear {
+    position: absolute; right: 12px; top: 50%;
+    transform: translateY(-50%);
+    display: none; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    background: rgba(200,168,75,.12);
+    border: 1px solid rgba(200,168,75,.3);
+    color: #c8a84b; font-size: 12px;
+    cursor: pointer; line-height: 1;
+    transition: background .2s, color .2s;
+}
+.search-clear:hover { background: #c8a84b; color: #050308; }
+
+/* ── Global No-Results ───────────────────────────────────── */
+.menu-no-results {
+    font-family: 'Cormorant Garamond','Times New Roman',serif;
+    font-size: 22px; font-style: italic;
+    color: rgba(200,168,75,.5);
+    text-align: center;
+    margin: 20px auto 0;
+    animation: fadeIn .4s ease;
+}
+
+/* ── Per-Group No-Results ────────────────────────────────── */
+.group-no-results {
+    font-family: 'Cairo','Segoe UI',sans-serif;
+    font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(192,176,160,.4);
+    text-align: center;
+    padding: 20px 0 36px;
+    animation: fadeIn .4s ease;
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── RTL ─────────────────────────────────────────────────── */
+html[dir="rtl"] .menu-search-input { padding: 14px 44px 14px 44px; text-align: right; }
+html[dir="rtl"] .search-icon  { left:auto; right:16px; }
+html[dir="rtl"] .search-clear { right:auto; left:12px; }

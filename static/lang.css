@@ -1,57 +1,97 @@
-/* ═══════════════════════════════════════════════════════
-   lang.css — Language toggle + shared RTL/LTR overrides
-   Uses the Champagne & Charcoal palette variables.
-   ═══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   lang.css — Language toggle + RTL/LTR overrides
+   Total Revamp edition — matches new design tokens
+   ═══════════════════════════════════════════════════════════ */
 
-/* ── Toggle Button ───────────────────────────────────────── */
+/* ── Language Toggle Button ──────────────────────────────── */
 .lang-btn {
-    background    : transparent;
-    border        : 1.5px solid rgba(200,168,75,0.55);
-    color         : #c8a84b;
-    padding       : 5px 17px;
-    cursor        : pointer;
-    font-family   : 'Cairo','Segoe UI',sans-serif;
-    font-size     : 13px;
-    font-weight   : 700;
-    letter-spacing: 0.3px;
-    transition    : all 0.3s ease;
-    white-space   : nowrap;
-    flex-shrink   : 0;
-    line-height   : 1.7;
+    background     : transparent;
+    border         : 1px solid rgba(200,168,75,0.40);
+    color          : #c8a84b;
+    padding        : 5px 18px;
+    cursor         : none;        /* use custom cursor */
+    font-family    : 'Cairo', 'Segoe UI', sans-serif;
+    font-size      : 11px;
+    font-weight    : 700;
+    letter-spacing : 1px;
+    text-transform : uppercase;
+    transition     : all 0.3s ease;
+    white-space    : nowrap;
+    flex-shrink    : 0;
+    line-height    : 1.8;
 }
 .lang-btn:hover,
 .lang-btn:focus {
-    background : #c8a84b;
-    color      : #0d0b09;
-    border-color: #c8a84b;
-    outline    : none;
+    background   : #c8a84b;
+    color        : #050308;
+    border-color : #c8a84b;
+    outline      : none;
 }
 
-/* nav row: keep list + button on one line */
+/* Nav row alignment */
 header nav { display:flex; align-items:center; gap:20px; }
 
 /* ── RTL: sub-title decorative lines ─────────────────────── */
-html[dir="rtl"] .sub-title::before { background:linear-gradient(to left, transparent,#c8a84b); }
-html[dir="rtl"] .sub-title::after  { background:linear-gradient(to right,transparent,#c8a84b); }
+html[dir="rtl"] .sub-title::before { background:linear-gradient(to left,  transparent, #c8a84b); }
+html[dir="rtl"] .sub-title::after  { background:linear-gradient(to right, transparent, #c8a84b); }
 
-/* ── RTL: home content-area ──────────────────────────────── */
-html[dir="rtl"] .content-area    { justify-content:flex-start; }
-html[dir="ltr"] .content-overlay { direction:ltr; }
+/* ── RTL: home hero ──────────────────────────────────────── */
+html[dir="rtl"] .content-area    { justify-content:flex-start; padding-right:0; padding-left:8%; }
+html[dir="ltr"] .content-overlay { direction:ltr; text-align:left; }
+html[dir="rtl"] .content-overlay { direction:rtl; text-align:right; }
+html[dir="rtl"] .button-container { justify-content:flex-start; }
+
+/* ── RTL: marquee reverses direction ─────────────────────── */
+html[dir="rtl"] .marquee-track { animation-direction:reverse; }
 
 /* ── RTL: forms ──────────────────────────────────────────── */
 html[dir="rtl"] input,
 html[dir="rtl"] textarea,
 html[dir="rtl"] select  { text-align:right; direction:rtl; }
 
-/* ── RTL: reservation info card ──────────────────────────── */
-html[dir="rtl"] .info-item     { flex-direction:row-reverse; }
+/* ── RTL: reservation info ───────────────────────────────── */
+html[dir="rtl"] .info-item       { flex-direction:row-reverse; }
 html[dir="rtl"] .info-item > div { text-align:right; }
 
 /* ── RTL: nav list ───────────────────────────────────────── */
 html[dir="rtl"] nav ul { flex-direction:row-reverse; }
 
-/* ── RTL: about content grid ─────────────────────────────── */
-html[dir="rtl"] .content-grid { direction:rtl; }
+/* ── RTL: about ──────────────────────────────────────────── */
+html[dir="rtl"] .content-grid    { direction:rtl; }
+html[dir="rtl"] .gold-title      { text-align:right; }
+html[dir="rtl"] .text-block p    { text-align:right; }
+html[dir="rtl"] .title-rule      { margin-left:auto; margin-right:0; background:linear-gradient(to left, #c8a84b, transparent); }
 
-/* ── RTL: talabat section ────────────────────────────────── */
+/* ── RTL: stats strip ────────────────────────────────────── */
+html[dir="rtl"] .stats-container { direction:rtl; }
+
+/* ── RTL: testimonials ───────────────────────────────────── */
+html[dir="rtl"] .testimonial-text    { direction:rtl; text-align:right; }
+html[dir="rtl"] .testimonial-author  { flex-direction:row-reverse; }
+html[dir="rtl"] .author-origin       { margin-right:auto; margin-left:0; }
+
+/* ── RTL: menu cards ─────────────────────────────────────── */
+html[dir="rtl"] .item h5,
+html[dir="rtl"] .item p { direction:rtl; }
+
+/* ── RTL: modal ──────────────────────────────────────────── */
+html[dir="rtl"] .modal-content  { direction:rtl; text-align:right; }
+html[dir="rtl"] .modal-name-ar  { direction:rtl; }
+html[dir="rtl"] .modal-divider  { margin-right:0; background:linear-gradient(to left, #c8a84b, transparent); }
+
+/* ── RTL: talabat ────────────────────────────────────────── */
 html[dir="rtl"] .talabat-inner { direction:rtl; }
+
+/* ── RTL: ornaments stay centered ─────────────────────────── */
+html[dir="rtl"] .ornament,
+html[dir="rtl"] .divider-diamond { direction:ltr; }
+
+/* ── RTL: divider-diamond text inside ─────────────────────── */
+html[dir="rtl"] .divider-diamond span { direction:ltr; }
+
+/* ── Custom cursor: restore pointer for touch devices ─────── */
+@media (pointer:coarse) {
+    .lang-btn  { cursor:pointer; }
+    a, button  { cursor:pointer; }
+    body       { cursor:auto; }
+}

@@ -1,0 +1,386 @@
+/* ═══════════════════════════════════════════════════════════
+   thankyou.css — La Cascada · Reservation Confirmed
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Cairo:wght@300;400;600;700;900&display=swap');
+
+:root {
+    --void: #050308;
+    --deep: #0c0910;
+    --surface: #141018;
+    --surface2: #1c1520;
+    --gold: #c8a84b;
+    --gold-warm: #deba66;
+    --gold-dim: #7a6428;
+    --gold-edge: rgba(200, 168, 75, .22);
+    --gold-glow: rgba(200, 168, 75, .20);
+    --cream: #f8f0e4;
+    --cream2: #c0b0a0;
+    --cream3: #7a6a5a;
+    --rule: #2a1e16;
+    --display: 'Cormorant Garamond', serif;
+    --ui: 'Cairo', 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background: var(--void);
+    color: var(--cream);
+    font-family: var(--ui);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Grain texture */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: .03;
+    mix-blend-mode: overlay;
+}
+
+/* ── Three.js canvas ─────────────────────────────────────── */
+#lc-particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── Main card ───────────────────────────────────────────── */
+.ty-card {
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    width: 90%;
+    height: 95%;
+    background: linear-gradient(175deg, var(--surface2) 0%, var(--surface) 100%);
+    border: 1px solid var(--gold-edge);
+    padding: 60px 52px 52px;
+    text-align: center;
+    box-shadow: 0 32px 100px rgba(0, 0, 0, .6), 0 0 0 1px rgba(200, 168, 75, .05);
+    opacity: 0;
+    transform: translateY(24px);
+    animation: cardReveal .9s .2s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+@keyframes cardReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Top gold accent */
+.ty-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+/* ── Animated checkmark ring ─────────────────────────────── */
+.ty-check-wrap {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 32px;
+    position: relative;
+    opacity: 0;
+    animation: checkIn .6s .7s ease-out forwards;
+}
+
+@keyframes checkIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.ty-check-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(var(--surface2), var(--surface2)) padding-box,
+        linear-gradient(135deg, var(--gold), var(--gold-warm)) border-box;
+    animation: ringGrow .7s .8s ease-out both;
+}
+
+@keyframes ringGrow {
+    from {
+        transform: scale(.6);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.ty-check-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    animation: checkBounce .5s 1.2s cubic-bezier(.34, 1.56, .64, 1) both;
+}
+
+@keyframes checkBounce {
+    from {
+        transform: scale(0) rotate(-20deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* ── Typography ──────────────────────────────────────────── */
+.ty-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    opacity: 0;
+    animation: fadeUp .6s 1.1s ease-out forwards;
+    margin-bottom: 14px;
+}
+
+.ty-heading {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp .8s 1.2s ease-out forwards;
+}
+
+.ty-name {
+    font-family: var(--display);
+    font-size: 22px;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp .7s 1.35s ease-out forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Ornament ────────────────────────────────────────────── */
+.ty-ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto 32px;
+    opacity: 0;
+    animation: fadeUp .6s 1.45s ease-out forwards;
+}
+
+.ty-ornament::before,
+.ty-ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+}
+
+.ty-ornament::before {
+    background: linear-gradient(to right, transparent, var(--gold-edge));
+}
+
+.ty-ornament::after {
+    background: linear-gradient(to left, transparent, var(--gold-edge));
+}
+
+.ty-ornament span {
+    color: var(--gold-dim);
+    font-size: 9px;
+}
+
+/* ── Booking Details ─────────────────────────────────────── */
+.ty-details {
+    background: var(--void);
+    border: 1px solid var(--rule);
+    padding: 22px 28px;
+    margin-bottom: 36px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp .7s 1.55s ease-out forwards;
+}
+
+.ty-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.ty-detail-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cream3);
+}
+
+.ty-detail-value {
+    font-family: var(--display);
+    font-size: 17px;
+    color: var(--gold-warm);
+    letter-spacing: .5px;
+}
+
+.ty-note {
+    font-size: 12px;
+    color: var(--cream3);
+    text-align: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule);
+    letter-spacing: .3px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.ty-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp .6s 1.7s ease-out forwards;
+}
+
+.ty-btn {
+    text-decoration: none;
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 13px 32px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all .35s;
+    display: inline-block;
+}
+
+.ty-btn-primary {
+    background: var(--gold);
+    color: var(--void);
+    border: none;
+}
+
+.ty-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .22), transparent);
+    transition: left .5s ease;
+}
+
+.ty-btn-primary:hover {
+    background: var(--gold-warm);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px var(--gold-glow);
+}
+
+.ty-btn-primary:hover::before {
+    left: 160%;
+}
+
+.ty-btn-secondary {
+    background: transparent;
+    color: var(--cream2);
+    border: 1px solid var(--gold-edge);
+}
+
+.ty-btn-secondary:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: rgba(200, 168, 75, .07);
+}
+
+/* ── Footer note ─────────────────────────────────────────── */
+.ty-footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--cream3);
+    opacity: 0;
+    animation: fadeUp .5s 1.85s ease-out forwards;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media(max-width:480px) {
+    .ty-card {
+        padding: 44px 28px 40px;
+    }
+
+    .ty-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ty-btn {
+        text-align: center;
+    }
+}
